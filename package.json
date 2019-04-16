@@ -1,5 +1,5 @@
 {
-  "name": "bueno-chat-app",
+  "name": "chat-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,7 +14,7 @@
     "react": "react-scripts start",
     "server": "nodemon src/server/index.js",
     "build": "react-scripts build",
-    "test": "react-scripts --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -29,5 +29,17 @@
   "devDependencies": {
     "concurrently": "^4.1.0",
     "nodemon": "^1.18.11"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TariqMedina/Bueno.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TariqMedina/Bueno/issues"
+  },
+  "homepage": "https://github.com/TariqMedina/Bueno#readme"
 }

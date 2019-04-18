@@ -47,4 +47,3 @@ export default withFirebaseAuth({
   providers,
   firebaseAppAuth,
 })(App);
-

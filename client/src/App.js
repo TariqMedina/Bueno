@@ -1,12 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Game from "./pages/game";
+import Nav from "./components/Nav/nav";
 
 function App() {
     return (
       <Router>
         <div>
-          {/* <Nav /> */}
+          <Nav />
           <Switch>
             <Route exact path="/" component={Game} />
             {/* <Route exact path="/books" component={Books} />

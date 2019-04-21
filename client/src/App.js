@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Game from "./pages/game";
 import Nav from "./components/Nav/nav";
 
+
 function App() {
     return (
       <Router>
@@ -10,8 +11,8 @@ function App() {
           <Nav />
           <Switch>
             <Route exact path="/" component={Game} />
-            {/* <Route exact path="/books" component={Books} />
-            <Route exact path="/books/:id" component={Detail} />
+            {/* <Route exact path="/landing" component={Landing} /> */}
+            {/* <Route exact path="/books/:id" component={Detail} />
             <Route component={NoMatch} /> */}
           </Switch>
         </div>

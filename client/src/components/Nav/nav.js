@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Nav.css";
-import firebase, { auth, provider } from "./firebase.js";
+
+import { auth, provider, startFirebaseUI } from "./firebase.js";
 
 class Nav extends Component {
   constructor() {
@@ -13,6 +14,15 @@ class Nav extends Component {
     // this.handleSubmit = this.handleSubmit.bind(this);
     this.login = this.login.bind(this); // <-- add this line
     this.logout = this.logout.bind(this); // <-- add this line
+  }
+
+  componentDidMount() {
+    startFirebaseUI ('#firebaseui');
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user });
+      }
+    });
   }
 
   handleChange(e) {
@@ -38,13 +48,7 @@ class Nav extends Component {
     });
   }
 
-  componentDidMount() {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        this.setState({ user });
-      }
-    });
-  }
+
 
   render() {
     return (
@@ -64,6 +68,7 @@ class Nav extends Component {
           >
             <span className="navbar-toggler-icon" />
           </button>
+          {/* <div id="firebaseui"></div> */}
           <div className="collapse navbar-collapse" id="navbarText">
             <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
               <div className="navbar-nav ml-auto">
@@ -80,7 +85,8 @@ class Nav extends Component {
                
                 </div>
                 ) : (
-                  <button onClick={this.login} type="button" class="btn btn-primary btn-sm">Log In</button>
+                  // <button onClick={this.login} type="button" class="btn btn-primary btn-sm">Log In with Google</button>
+                  <button id="firebaseui" onClick={this.login} type="button" class="btn btn-primary btn-sm">Log in</button>
                 )}
               </div>
             </div>

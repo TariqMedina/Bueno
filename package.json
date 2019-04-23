@@ -25,6 +25,8 @@
     "firebase": "^5.10.0",
     "firebaseui": "^3.5.2",
     "if-env": "^1.0.4",
-    "mongoose": "^5.3.16"
+    "mongoose": "^5.3.16",
+    "react-firebase": "^2.2.8",
+    "react-firebaseui": "^3.1.2"
   }
 }

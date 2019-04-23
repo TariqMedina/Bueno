@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Nav.css";
 
-import { auth, provider, startFirebaseUI } from "./firebase.js";
+import { auth, provider, startFirebaseUI } from "../Firebase/Firebaseconfig";
 
 class Nav extends Component {
   constructor() {
@@ -85,8 +85,8 @@ class Nav extends Component {
                
                 </div>
                 ) : (
-                  // <button onClick={this.login} type="button" class="btn btn-primary btn-sm">Log In with Google</button>
-                  <button id="firebaseui" onClick={this.login} type="button" class="btn btn-primary btn-sm">Log in</button>
+                  <button onClick={this.login} type="button" class="btn btn-primary btn-sm">Log In with Google</button>
+               
                 )}
               </div>
             </div>

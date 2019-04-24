@@ -1,0 +1,17 @@
+.profile-pic{
+     width: 100px;
+    height: auto;
+    border-radius: 50%;
+} */
+
+li {
+    width: 80%;
+}
+
+button {
+    width: 100%;
+}
+
+.firebaseui-list-item {
+    width: 100%
+}

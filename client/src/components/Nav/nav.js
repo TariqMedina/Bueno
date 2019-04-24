@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Nav.css";
+import { Link } from "react-router-dom";
 
 import { auth, provider, startFirebaseUI } from "../Firebase/Firebaseconfig";
 
@@ -85,8 +86,12 @@ class Nav extends Component {
                
                 </div>
                 ) : (
-                  <button onClick={this.login} type="button" class="btn btn-primary btn-sm">Log In with Google</button>
-               
+                  // <button onClick={this.login} type="button" class="btn btn-primary btn-sm">Log In</button>
+                  <button onClick={"/login"} type="button" class="btn btn-primary btn-sm">Log In</button>
+
+            //       <LinkContainer to="/login">
+            //   <NavItem>Login</NavItem>
+            // </LinkContainer>
                 )}
               </div>
             </div>

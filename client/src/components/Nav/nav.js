@@ -52,14 +52,16 @@ class Nav extends Component {
 
   render() {
     let img = "";
-    if(firebase.auth().currentUser != undefined) {
-      if(firebase.auth().currentUser.photoURL != undefined) {
-        if(firebase.auth().currentUser.photoURL.length > 0) {
-        img = <img
-            className="profile-pic"
-            alt="profile picture"
-            src={firebase.auth().currentUser.photoURL}
-            />;
+    if (firebase.auth().currentUser != undefined) {
+      if (firebase.auth().currentUser.photoURL != undefined) {
+        if (firebase.auth().currentUser.photoURL.length > 0) {
+          img = (
+            <img
+              className="profile-pic"
+              alt="profile picture"
+              src={firebase.auth().currentUser.photoURL}
+            />
+          );
         }
       }
     }
@@ -68,44 +70,52 @@ class Nav extends Component {
       <div className="header">
         <nav className="navbar navbar-expand-md navbar-dark bg-primary">
           <div className="d-flex w-50 order-0">
-            <a className="navbar-brand mr-1" href="#">
+            <a className="navbar-brand mr-1" href="/">
               Bueno
             </a>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#collapsingNavbar"
-            >
-              <span className="navbar-toggler-icon" />
-            </button>
+            <span className="navbar-text mr-auto">
+              <Link to="/" className={"btn btn-primary"}>
+                Home
+              </Link>
+              <span />
+              {this.state.user ? (
+                <Link to="/game" className={"btn btn-primary"}>
+                  Game
+                </Link>
+              ) : (
+                <p />
+              )}
+            </span>
           </div>
           <div className="justify-content-center order-1">
             <div className="navbar-nav">
               {this.state.user ? (
                 <span className="navbar-text welcome">
-                { img } 
+                  {img}
                   Welcome, {this.state.user.displayName}
-                                    
-                
                 </span>
               ) : (
-                <span className="navbar-text small welcome">Log in to play</span>
+                <span className="navbar-text welcome">
+                  <i class="fab fa-canadian-maple-leaf" />
+                </span>
               )}
             </div>
           </div>
           {this.state.user ? (
-          <span className="navbar-text small text-truncate mt-1 text-right order-1 order-md-last">
-
-          <button onClick={this.logout}type="button" class="btn btn-primary">
-                  Log Out
- </button>
-         
-          </span>
-          ):(
             <span className="navbar-text small text-truncate mt-1 text-right order-1 order-md-last">
-    <button onClick={"/login"} type="button" class="btn btn-primary">Log In</button>      
-         
+              <button
+                onClick={this.logout}
+                type="button"
+                class="btn btn-primary"
+              >
+                Log Out
+              </button>
+            </span>
+          ) : (
+            <span className="navbar-text small text-truncate mt-1 text-right order-1 order-md-last">
+              <Link to="/login" className={"btn btn-primary"}>
+                Login
+              </Link>
             </span>
           )}
         </nav>

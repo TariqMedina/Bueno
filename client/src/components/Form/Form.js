@@ -51,6 +51,7 @@ export default class Form extends Component {
   //       }
   //     });
   // }
+
   listenMessages() {
     this.messageRef
       .limitToLast(10)
@@ -60,6 +61,7 @@ export default class Form extends Component {
         });
       });
   }
+
   render() {
     return (
       <div className="form">

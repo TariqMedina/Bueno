@@ -3,6 +3,20 @@ body {
   background-color: #fff;
 }
 
+.profile-pic {
+  width:32px;
+  height:32px;
+  border-radius: 50%;
+}
+
+.welcome {
+  width:360px;
+  font-weight: 500;
+}
+
+.auth-btn{
+  width: 50px;
+}
 header {
   color: #fff;
   background-color: #103D5D;

@@ -35,7 +35,6 @@ class Login extends Component {
               <div>
               
               <h2>Welcome to Bueno, {firebase.auth().currentUser.displayName}</h2>
-              <img className="profile-pic" alt="profile picture" src={firebase.auth().currentUser.photoURL}/>
               <Chat username={firebase.auth().currentUser}/>
               </div>
               

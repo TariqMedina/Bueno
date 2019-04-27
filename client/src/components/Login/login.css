@@ -1,0 +1,36 @@
+.profile-pic{
+    width: 100px;
+    height: auto;
+    border-radius: 50%;
+} */
+
+.login {
+    text-align: center;
+    margin: auto;
+}
+
+.login-container {
+    text-align: center;
+}
+
+.h2-title {
+    margin-bottom: 50px;
+}
+
+li {
+    width: 80%;
+}
+
+button {
+    width: 100%;
+}
+
+.firebaseui-list-item {
+    width: 100%;
+    background-color: white;
+    box-shadow: none;
+}
+
+.profile-pic {
+    margin-top: 30px;
+}

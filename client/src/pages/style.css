@@ -1,0 +1,61 @@
+.p4div {
+    height: 40vh;
+    width: 100%;
+}
+
+.p2div {
+    height: 40vh;
+    width: 100%;
+}
+
+.p1div {
+    height: 20vh;
+    z-index: 5;
+}
+
+.mytable {
+    background-color: red;
+    /* z-index: -1; */
+}
+
+.mainMessage{
+    margin-top: 100px;
+    color: white;
+}
+
+.p1cards {
+    /* max-height: 150px; */
+    position: relative;
+    object-fit: contain;
+    right: 0px;
+    max-width: 100px;
+}
+
+.drawPile {
+    z-index: 10;
+}
+.p4cards {
+    position: relative;
+    transform: rotate(90deg);
+    left: 0;
+    max-width: 100px;
+    /* float: right; */
+}
+
+.p2cards {
+    position: relative;
+    transform: rotate(-90deg);
+    right: 0%;
+    max-width: 100px;
+    /* float: right; */
+}
+/* img {
+    position: absolute;
+    display: block;
+    max-width: 150px;
+    /* max-height: 300px; */
+/* } */
+
+.col-md-8{
+    z-index: -1;
+}

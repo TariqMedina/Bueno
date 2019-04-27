@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import firebase from "firebase";
 import "./home.css";
-import Chat from "../Chat/Chat";
-import { Col, Row, Container } from "../Grid";
 import Jumbotron from "../Jumbotron";
+
 
 class Home extends Component {
   state = { isSignedIn: false };
@@ -32,12 +31,13 @@ class Home extends Component {
           <row>
             <div className="col">
               <Jumbotron message="Welcome" />
+        
               {this.state.isSignedIn ? (
                 <div className="col-sm-4">
-                  <Chat />
+           
                 </div>
               ) : (
-                <p />
+                <p> </p>
               )}
             </div>
           </row>

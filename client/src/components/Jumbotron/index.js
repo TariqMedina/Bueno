@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./style.css";
 import firebase from "firebase";
-
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 
 class Jumbotron extends Component {
@@ -35,11 +35,18 @@ render() {
               <div>
               
               <h2>Welcome to Bueno, {firebase.auth().currentUser.displayName}</h2>
-         
+              <hr/>
+                  <a className="btn btn-primary btn-lg" href="/game" role="button">Join the Game!</a>
               </div>
               
             ) : (
-      <a className="btn btn-primary btn-lg" href="/login" role="button">Log in to play!</a>
+      // <a className="btn btn-primary btn-lg" href="/login" role="button">Log in to play!</a>
+      <span>
+                  <StyledFirebaseAuth
+                    uiConfig={this.uiConfig}
+                    firebaseAuth={firebase.auth()}
+                  />
+                </span>
             )}
     </div>
     );

@@ -113,7 +113,7 @@ class Nav extends Component {
             </span>
           ) : (
             <span className="navbar-text small text-truncate mt-1 text-right order-1 order-md-last">
-              <Link to="/login" className={"btn btn-primary"}>
+              <Link to="/" className={"btn btn-primary"}>
                 Login
               </Link>
             </span>

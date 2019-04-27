@@ -15,3 +15,13 @@ button {
 .firebaseui-list-item {
     width: 100%
 }
+
+.home {
+    background-image: url("../Home/homeBG.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.full{
+    height: 400px;
+}

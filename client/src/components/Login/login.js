@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { auth, provider, startFirebaseUI } from "../Firebase/Firebaseconfig";
-import "../Login/login.css"
-import Chat from "../Chat/Chat"
+import "../Login/login.css";
+import Chat from "../Chat/Chat";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   state = { isSignedIn: false };
@@ -27,30 +28,28 @@ class Login extends Component {
 
   render() {
     return (
-      <container className="fluid">
+      <container className="fluid home">
         <row>
           <div className="col-sm-6">
-          <div classname="Login">
-            {this.state.isSignedIn ? (
-              <div>
-              
-              <h2>Welcome to Bueno, {firebase.auth().currentUser.displayName}</h2>
-              <img className="profile-pic" alt="profile picture" src={firebase.auth().currentUser.photoURL}/>
-              <Chat username={firebase.auth().currentUser}/>
-              </div>
-              
-            ) : (
-              <span>
-              <h2 className="justify-content-center">Sign In</h2>
-              <StyledFirebaseAuth
-              
-                uiConfig={this.uiConfig}
-
-                firebaseAuth={firebase.auth()}
-              />
-              </span>
-            )}
-          </div>
+            <div classname="Login">
+              {this.state.isSignedIn ? (
+                <div>
+                  <h2>
+                    Welcome to Bueno, {firebase.auth().currentUser.displayName}
+                  </h2>
+                  <Link to="/game" className={"btn btn-primary"}>
+                    Join the Game
+                  </Link>
+                </div>
+              ) : (
+                <span>
+                  <StyledFirebaseAuth
+                    uiConfig={this.uiConfig}
+                    firebaseAuth={firebase.auth()}
+                  />
+                </span>
+              )}
+            </div>
           </div>
         </row>
       </container>

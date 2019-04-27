@@ -1,6 +1,6 @@
 .profile-pic{
-     width: 100px;
-    height: auto;
+     width: 32px;
+    height: 32px;
     border-radius: 50%;
 } */
 
@@ -14,4 +14,14 @@ button {
 
 .firebaseui-list-item {
     width: 100%
+}
+
+.home {
+    background-image: url("../Home/homeBG.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.full{
+    height: 400px;
 }

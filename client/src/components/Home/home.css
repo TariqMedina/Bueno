@@ -1,0 +1,10 @@
+
+.home {
+    background-image: url("./homeBG.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.full{
+    height: 400px;
+}

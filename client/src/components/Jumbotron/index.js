@@ -7,7 +7,6 @@ import image from './bueno-logo.png';
 class Jumbotron extends Component {
   state = {
     user: null,
-    username: '',
     isSignedIn: false,
     activePlayers: [],
     gameMessage: 'Join the Game!',
@@ -36,18 +35,18 @@ class Jumbotron extends Component {
 
   handleClick = () => {
     console.log('hello');
-    if (this.state.activePlayers.length < 4) {
+    if (this.state.activePlayers.length <= 4) {
       this.setState({
         activePlayers: [
           ...this.state.activePlayers,
           firebase.auth().currentUser.displayName
-        ],
-        username: firebase.auth().currentUser.displayName
+        ]
       });
       //push current user to firebase
       const playersRef = firebase.database().ref('players');
       const player = {
-        user: this.state.username
+        user: firebase.auth().currentUser.email,
+        name: firebase.auth().currentUser.displayName
       };
       playersRef.push(player);
     } else {
@@ -66,6 +65,10 @@ class Jumbotron extends Component {
   assignPlayers = () => {
     console.log('player assignment begins');
     //I need to know the username from handleClick
+    // let userId = '';
+    // userId = firebase.auth().currentUser.displayName;
+
+    // let gameRef = new Firebase(GAME_LOCATION);
   };
   // ++++
 

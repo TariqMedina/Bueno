@@ -11,12 +11,18 @@ const Modal = ({ handleClose, show, children }) => {
 
   return (
     <div className={showHideClassName}>
-    <div className="col-sm-4">
       <section className="modal-main">
-        {children}
-        <button onClick={handleClose} className="btn btn-primary">close</button>
+        <div className="row">
+          <div className="col-4">
+            {children}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-4">
+            <button onClick={handleClose} className="btn btn-primary close-btn">close</button>
+          </div>
+        </div>
       </section>
-      </div>
     </div>
   );
 };
@@ -31,7 +37,7 @@ class Dashboard extends Component {
   hideModal = () => {
     this.setState({ show: false });
   };
-  
+
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user });
@@ -40,22 +46,21 @@ class Dashboard extends Component {
 
   render() {
     return (
-      
+
       <main>
         {this.state.isSignedIn ? (
-          <section>
-         <h3 className="text-center">Bueno Chat</h3>
-        <Modal show={this.state.show} handleClose={this.hideModal}>
-        <p>Show Chat</p>
-        <Chat username={firebase.auth().currentUser}/>
-        </Modal>
-        <button type="button" onClick={this.showModal} className="btn btn-primary">
-         open chat
+          <section className="open-chat">
+            <h3 className="text-center"></h3>
+            <Modal show={this.state.show} handleClose={this.hideModal}>
+              <Chat username={firebase.auth().currentUser} />
+            </Modal>
+            <button type="button" onClick={this.showModal} className="btn btn-primary">
+              open chat
         </button>
-        </section>
-        ):(
-<p></p>
-        )}
+          </section>
+        ) : (
+            <p></p>
+          )}
       </main>
     );
   }

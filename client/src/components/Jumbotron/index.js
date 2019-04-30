@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./style.css";
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-
+import image from "./bueno-logo.png";
 
 class Jumbotron extends Component {
   state = { isSignedIn: false };
@@ -27,15 +27,16 @@ componentDidMount() {
 render() {
   return (
     <div className="jumbotron text-center">
-      <h1>Bueno</h1>
-      <p>
+      <img className="bueno-logo" src={image}></img>
+      <p className="intro-text">
       Spice up your life with Bueno, a digital version of Uno, the popular card game!
       </p>
       {this.state.isSignedIn ? (
               <div>
               
-              <h2>Welcome to Bueno, {firebase.auth().currentUser.displayName}</h2>
-              <hr/>
+              <h2>Welcome to Bueno, {firebase.auth().currentUser.displayName}!</h2>
+              <br></br>
+              <br></br>
                   <a className="btn btn-primary btn-lg" href="/game" role="button">Join the Game!</a>
               </div>
               

@@ -68,26 +68,91 @@ class Nav extends Component {
 
     return (
       <div className="header">
-        <nav className="navbar navbar-expand-md navbar-dark bg-primary">
+        <nav className="bueno-nav">
+          <div className="row">
+            <div className="col-md-2 col-sm-12">
+            <div className="bueno-brand-text">
+              <a className="navbar-brand mr-1 " href="/">Bueno!</a>
+            </div>
+            </div>
+            <div className="col-sm-2 col-xs-4">
+            <div className="game-btn">
+              <span className="navbar-text mr-auto">
+                {this.state.user ? (
+                  <Link to="/game" className={"btn btn-primary"}>
+                    Game
+                </Link>
+                ) : (
+                    <p/>
+                  )}
+              </span>
+              </div>
+            </div>
+
+
+            <div className="col-md-6 col-sm-8 col-xs-4">
+              <div className="welcome-container">
+                
+                  {this.state.user ? (
+                    <span className="navbar-text welcome">
+                      {img}
+                      Welcome, {this.state.user.displayName}
+                    </span>
+                  ) : (
+                      <span className="navbar-text welcome">
+                        <i class="fab fa-canadian-maple-leaf" />
+                      </span>
+                    )}
+                
+              </div>
+            </div>
+
+            <div className="col-md-2 col-sm-2 col-xs-4">
+              <div className="login-container">
+                
+                  {this.state.user ? (
+                    <span className="navbar-text">
+                      <button
+                        onClick={this.logout}
+                        type="button"
+                        class="btn btn-primary"
+                      >
+                        Log Out
+                    </button>
+                    </span>
+                  ) : (
+                      <span className="navbar-text">
+                        <Link to="/" className={"btn btn-primary"}>
+                          Login
+                      </Link>
+                      </span>
+                    )}
+                
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      /*
+      <div className="header">
+        <nav className="navbar navbar-expand-md navbar-dark bg-primary justify-content-end">
+          <a className="navbar-brand mr-1" href="/">
+            Bueno
+          </a>
           <div className="d-flex w-50 order-0">
-            <a className="navbar-brand mr-1" href="/">
-              Bueno
-            </a>
+
             <span className="navbar-text mr-auto">
-              <Link to="/" className={"btn btn-primary"}>
-                Home
-              </Link>
-              <span />
               {this.state.user ? (
                 <Link to="/game" className={"btn btn-primary"}>
                   Game
                 </Link>
               ) : (
-                <p />
-              )}
+                  <p />
+                )}
             </span>
           </div>
-          <div className="justify-content-center order-1">
+          <div className="justify-content-start order-1">
             <div className="navbar-nav">
               {this.state.user ? (
                 <span className="navbar-text welcome">
@@ -95,10 +160,10 @@ class Nav extends Component {
                   Welcome, {this.state.user.displayName}
                 </span>
               ) : (
-                <span className="navbar-text welcome">
-                  <i class="fab fa-canadian-maple-leaf" />
-                </span>
-              )}
+                  <span className="navbar-text welcome">
+                    <i class="fab fa-canadian-maple-leaf" />
+                  </span>
+                )}
             </div>
           </div>
           {this.state.user ? (
@@ -112,14 +177,16 @@ class Nav extends Component {
               </button>
             </span>
           ) : (
-            <span className="navbar-text small text-truncate mt-1 text-right order-1 order-md-last">
-              <Link to="/" className={"btn btn-primary"}>
-                Login
+              <span className="navbar-text small text-truncate mt-1 text-right order-1 order-md-last">
+                <Link to="/" className={"btn btn-primary"}>
+                  Login
               </Link>
-            </span>
-          )}
+              </span>
+            )}
         </nav>
       </div>
+      */
+
     );
   }
 }

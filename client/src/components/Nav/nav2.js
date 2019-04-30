@@ -18,7 +18,7 @@ class Nav extends Component {
   }
 
   componentDidMount() {
-    startFirebaseUI ('#firebaseui');
+    startFirebaseUI('#firebaseui');
     auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
@@ -31,7 +31,7 @@ class Nav extends Component {
       [e.target.name]: e.target.value
     });
   }
-  
+
   logout() {
     auth.signOut().then(() => {
       this.setState({
@@ -54,53 +54,46 @@ class Nav extends Component {
   render() {
     return (
       <div className="header">
+      
+      </div>
+      /*<div className="header">
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div className="d-flex w-50 order-0">
-          <a className="navbar-brand mr-1" href="/">
-            Bueno
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-          </div> {/*End of left sided nav content */}
-          <div className="collapse navbar-collapse justify-content-center order-2" id="collapsingNavbar">
-            {/* <div className="navbar-collapse collapse w-100 order-3 dual-collapse2"> */}
-              <div className="navbar-nav 
-              ">
-                {/* add logic to check if user is logged on */}
-                {this.state.user ? (
-                  <div>
-                <span className="navbar-text small">
-                  Welcome, {this.state.user.displayName}
-                </span>
-                <span className="navbar-text small text-truncate mt-1 w-50 text-right order-1 order-md-last">
-                <button onClick={this.logout}type="button" class="btn btn-primary btn-sm">
-                  Log Out
-                </button>
-                </span>
-                </div>
-                ) : (
-                  // <button onClick={this.login} type="button" class="btn btn-primary btn-sm">Log In</button>
-                  <button onClick={"/login"} type="button" class="btn btn-primary btn-sm">Log In</button>
+          <div className="d-flex w-50 order-0">
+            <a className="navbar-brand mr-1" href="/">Bueno</a>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon" />
+            </button>
+          </div>
 
-            //       <LinkContainer to="/login">
-            //   <NavItem>Login</NavItem>
-            // </LinkContainer>
+          <div className="collapse navbar-collapse justify-content-end order-2" id="collapsingNavbar">
+            <div className="navbar-nav justify-content-end">
+              {this.state.user ? (
+                <div>
+                  <span className="navbar-text small">
+                    Welcome, {this.state.user.displayName}
+                  </span>
+                  <span className="navbar-text small text-truncate mt-1 w-50 text-right order-1 order-md-last">
+                    <button onClick={this.logout} type="button" class="btn btn-primary btn-sm">
+                      Log Out
+                </button>
+                  </span>
+                </div>
+              ) : (
+                  <button onClick={"/login"} type="button" class="btn btn-primary btn-sm">Log In</button>
                 )}
-              </div>
             </div>
-          {/* </div> */}
-        </nav>{/* End of Nav*/}
+          </div>
+        </nav>
         <br />
-      </div>//End of header
+      </div>//End of header*/
     );
   }
 }

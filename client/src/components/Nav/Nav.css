@@ -7,62 +7,70 @@ body {
   width:32px;
   height:32px;
   border-radius: 50%;
+  margin-right: 10px;
 }
 
 .welcome {
-  width:360px;
   font-weight: 700;
+  margin: auto;
 }
 
 .auth-btn{
   width: 50px;
 }
-header {
-  color: #fff;
-  background-color: #103D5D;
-  padding: 33px 0 25px 15px;
+
+
+.bueno-nav {
+  padding: 10px;
+  background-color: gold;
 }
 
-header p {
-  width: 400px;
-  margin: 0 auto;
-}
-header .wrapper {
-  display: flex;
-  justify-content: space-between;
+.bueno-nav a{
+  color: rgb(53, 53, 53);
 }
 
-header h1 {
-  font-size: 25px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  display: inline-block;
-  margin: 0;
-  vertical-align: middle;
-  
+.bueno-brand-text {
+  font-size: 30px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 10px;
 }
 
-.fa {
-  font-size: 22px;
-  transform: translateY(50deg);  
+.game-btn {
+  max-width: 120px;
+  padding-top: 5px;
+  margin-left: 20px;
 }
+
+.btn-primary {
+  color: white !important;
+}
+
+.welcome-container {
+  text-align: right !important;
+  max-width: 100%;
+  padding-top: 10px;
+  color: rgb(53, 53, 53);
+  margin: auto;
+
+}
+
+.login-container {
+  text-align: right;
+  max-width: 200px;
+  padding-top: 5px;
+  padding-right: 20px;
+}
+
+
 
 header i {
   vertical-align: middle;
   margin-left: 12px;
 }
 
-.container {
-  display: flex;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding-top: 30px;
-}
 
-.wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-}
+
 
 .add-item {
   border-radius: 2px;
@@ -143,6 +151,11 @@ form button {
   margin-top: 10px;
 }
 
+.navbar-nav {
+  width: 100%;
+  margin: auto;
+}
+
 .navBtn {
   border-radius: 2px;
   min-width: 88px;
@@ -155,6 +168,7 @@ form button {
   box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
   padding: 10px 6px;
 }
+
 
 .user-profile {
   position: fixed;

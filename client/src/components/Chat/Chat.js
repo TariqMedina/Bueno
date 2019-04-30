@@ -26,6 +26,7 @@ class Chat extends Component {
   // handleLogOut() {
   //   firebase.auth().signOut();
   // }
+  
   render() {
     return (
       <div className="app">

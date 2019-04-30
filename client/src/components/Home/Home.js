@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import firebase from "firebase";
-import "./home.css";
+//import "./home.css";
 import Jumbotron from "../Jumbotron";
 
 

@@ -1,21 +1,8 @@
 .profile-pic{
-    width: 100px;
-    height: auto;
+     width: 32px;
+    height: 32px;
     border-radius: 50%;
 } */
-
-.login {
-    text-align: center;
-    margin: auto;
-}
-
-.login-container {
-    text-align: center;
-}
-
-.h2-title {
-    margin-bottom: 50px;
-}
 
 li {
     width: 80%;
@@ -27,10 +14,17 @@ button {
 
 .firebaseui-list-item {
     width: 100%;
-    background-color: white;
+    background-color: transparent;
     box-shadow: none;
+    margin-top: 10px !important;
 }
 
-.profile-pic {
-    margin-top: 30px;
+.home {
+    background-image: url("../Home/homeBG.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.full{
+    height: 400px;
 }

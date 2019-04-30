@@ -60,9 +60,11 @@ export default class Form extends Component {
         });
       });
   }
+
+
   render() {
     return (
-      <div className="form">
+      <div style={{zIndex:1000}} className="form">
         <div className="form__message">
           { this.state.list.map((item, index) =>
             <Message key={index} message={item} />

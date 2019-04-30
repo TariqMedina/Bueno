@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./Nav.css";
 import { Link } from "react-router-dom";
-import logo from './bueno-logo.png';
+import firebase from "firebase";
+
 import { auth, provider, startFirebaseUI } from "../Firebase/Firebaseconfig";
 
 class Nav extends Component {
@@ -18,7 +19,7 @@ class Nav extends Component {
   }
 
   componentDidMount() {
-    startFirebaseUI('#firebaseui');
+    startFirebaseUI("#firebaseui");
     auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
@@ -49,56 +50,143 @@ class Nav extends Component {
     });
   }
 
-
-
   render() {
+    let img = "";
+    if (firebase.auth().currentUser != undefined) {
+      if (firebase.auth().currentUser.photoURL != undefined) {
+        if (firebase.auth().currentUser.photoURL.length > 0) {
+          img = (
+            <img
+              className="profile-pic"
+              alt="profile picture"
+              src={firebase.auth().currentUser.photoURL}
+            />
+          );
+        }
+      }
+    }
+
     return (
       <div className="header">
-        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-          <a className="navbar-brand" href="/">
-            <img className="bueno-logo" src={logo} alt={"bueno logo"}/>
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-          {/* <div id="firebaseui"></div> */}
-          <div className="collapse navbar-collapse" id="navbarText">
-            <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
-              <div className="navbar-nav ml-auto">
-                {/* add logic to check if user is logged on */}
+        <nav className="bueno-nav">
+          <div className="row">
+            <div className="col-md-2 col-sm-12">
+            <div className="bueno-brand-text">
+              <a className="navbar-brand mr-1 " href="/">Bueno!</a>
+            </div>
+            </div>
+            <div className="col-sm-2 col-xs-4">
+            <div className="game-btn">
+              <span className="navbar-text mr-auto">
                 {this.state.user ? (
-                  <div>
-                    <span className="navbar-text">
+                  <Link to="/game" className={"btn btn-primary"}>
+                    Game
+                </Link>
+                ) : (
+                    <p/>
+                  )}
+              </span>
+              </div>
+            </div>
+
+
+            <div className="col-md-6 col-sm-8 col-xs-4">
+              <div className="welcome-container">
+                
+                  {this.state.user ? (
+                    <span className="navbar-text welcome">
+                      {img}
                       Welcome, {this.state.user.displayName}
                     </span>
-                    <span></span>
-                    <button onClick={this.logout} type="button" class="btn btn-primary btn-sm">
-                      Log Out
-                </button>
+                  ) : (
+                      <span className="navbar-text welcome">
+                        <i class="fab fa-canadian-maple-leaf" />
+                      </span>
+                    )}
+                
+              </div>
+            </div>
 
-                  </div>
-                ) : (
-                    // <button onClick={this.login} type="button" class="btn btn-primary btn-sm">Log In</button>
-                    <button onClick={"/login"} type="button" class="btn btn-primary btn-sm">Log In</button>
-
-                    //       <LinkContainer to="/login">
-                    //   <NavItem>Login</NavItem>
-                    // </LinkContainer>
-                  )}
+            <div className="col-md-2 col-sm-2 col-xs-4">
+              <div className="login-container">
+                
+                  {this.state.user ? (
+                    <span className="navbar-text">
+                      <button
+                        onClick={this.logout}
+                        type="button"
+                        class="btn btn-primary"
+                      >
+                        Log Out
+                    </button>
+                    </span>
+                  ) : (
+                      <span className="navbar-text">
+                        <Link to="/" className={"btn btn-primary"}>
+                          Login
+                      </Link>
+                      </span>
+                    )}
+                
               </div>
             </div>
           </div>
         </nav>
-        <br />
       </div>
+
+      /*
+      <div className="header">
+        <nav className="navbar navbar-expand-md navbar-dark bg-primary justify-content-end">
+          <a className="navbar-brand mr-1" href="/">
+            Bueno
+          </a>
+          <div className="d-flex w-50 order-0">
+
+            <span className="navbar-text mr-auto">
+              {this.state.user ? (
+                <Link to="/game" className={"btn btn-primary"}>
+                  Game
+                </Link>
+              ) : (
+                  <p />
+                )}
+            </span>
+          </div>
+          <div className="justify-content-start order-1">
+            <div className="navbar-nav">
+              {this.state.user ? (
+                <span className="navbar-text welcome">
+                  {img}
+                  Welcome, {this.state.user.displayName}
+                </span>
+              ) : (
+                  <span className="navbar-text welcome">
+                    <i class="fab fa-canadian-maple-leaf" />
+                  </span>
+                )}
+            </div>
+          </div>
+          {this.state.user ? (
+            <span className="navbar-text small text-truncate mt-1 text-right order-1 order-md-last">
+              <button
+                onClick={this.logout}
+                type="button"
+                class="btn btn-primary"
+              >
+                Log Out
+              </button>
+            </span>
+          ) : (
+              <span className="navbar-text small text-truncate mt-1 text-right order-1 order-md-last">
+                <Link to="/" className={"btn btn-primary"}>
+                  Login
+              </Link>
+              </span>
+            )}
+        </nav>
+      </div>
+      */
+
     );
   }
 }

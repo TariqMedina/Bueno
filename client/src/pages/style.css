@@ -28,7 +28,6 @@
     position: relative;
     object-fit: contain;
     right: 0px;
-    max-width: 100px;
 }
 
 .drawPile {
@@ -38,7 +37,6 @@
     position: relative;
     transform: rotate(90deg);
     left: 0;
-    max-width: 100px;
     /* float: right; */
 }
 
@@ -46,7 +44,6 @@
     position: relative;
     transform: rotate(-90deg);
     right: 0%;
-    max-width: 100px;
     /* float: right; */
 }
 /* img {

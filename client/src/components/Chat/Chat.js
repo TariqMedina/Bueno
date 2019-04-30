@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './Chat.css';
 import Form from '../Form/Form';
-import firebase from 'firebase';
-import firebaseConfig from '../Firebase/Firebaseconfig';
+// import firebase from 'firebase';
+// import firebaseConfig from '../Firebase/Firebaseconfig';
 
 // firebase.initializeApp(firebaseConfig);
 class Chat extends Component {
@@ -10,9 +10,9 @@ class Chat extends Component {
     super(props);
     this.state = {
       user: this.props.user
-    }
+    };
   }
-  
+
   // componentDidMount() {
   //   firebase.auth().onAuthStateChanged(user => {
   //     this.setState({ user });
@@ -26,7 +26,7 @@ class Chat extends Component {
   // handleLogOut() {
   //   firebase.auth().signOut();
   // }
-  
+
   render() {
     return (
       <div className="app">
@@ -55,7 +55,6 @@ class Chat extends Component {
           <Form user={this.state.user} />
         </div>
       </div>
-      
     );
   }
 }

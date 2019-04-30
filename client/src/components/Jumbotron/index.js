@@ -7,6 +7,7 @@ import image from './bueno-logo.png';
 class Jumbotron extends Component {
   state = {
     user: null,
+    username: '',
     isSignedIn: false,
     activePlayers: [],
     gameMessage: 'Join the Game!',
@@ -40,8 +41,15 @@ class Jumbotron extends Component {
         activePlayers: [
           ...this.state.activePlayers,
           firebase.auth().currentUser.displayName
-        ]
+        ],
+        username: firebase.auth().currentUser.displayName
       });
+      //push current user to firebase
+      const playersRef = firebase.database().ref('players');
+      const player = {
+        user: this.state.username
+      };
+      playersRef.push(player);
     } else {
       this.setState({
         gameMessage: 'Sorry, we have 4 players. Please wait',
@@ -51,6 +59,15 @@ class Jumbotron extends Component {
       console.log('sorry we have enough players');
     }
   };
+
+  // assign players
+  //++++++
+
+  assignPlayers = () => {
+    console.log('player assignment begins');
+    //I need to know the username from handleClick
+  };
+  // ++++
 
   render() {
     return (

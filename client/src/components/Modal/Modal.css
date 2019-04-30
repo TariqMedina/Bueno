@@ -10,11 +10,13 @@
   .modal-main {
     position:fixed;
     background: white;
-    width: 100%;
+    width: auto;
     height: auto;
-    top:50%;
-    left:30%;
-    transform: translate(-50%,-50%);
+    /* top:50%; */
+    /* left:30%; */
+    bottom: 0;
+    right: 0;
+    /* transform: translate(-50%,-50%); */
   }
   
   .display-block {
@@ -23,4 +25,25 @@
   
   .display-none {
     display: none;
+  }
+
+  .modal-btn {
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: auto;
+  }
+
+  .open-chat{
+    width: auto;
+    position: fixed;
+    bottom: 0;
+    right:0;
+  }
+
+  .bueno-chat {
+    position:fixed;
+    bottom: 40px;
+    right:0;
   }

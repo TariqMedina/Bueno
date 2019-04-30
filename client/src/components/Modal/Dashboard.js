@@ -14,7 +14,7 @@ const Modal = ({ handleClose, show, children }) => {
     <div className="col-sm-4">
       <section className="modal-main">
         {children}
-        <button onClick={handleClose} className="btn btn-primary">close</button>
+        <button onClick={handleClose} className="btn btn-primary modal-btn">close chat</button>
       </section>
       </div>
     </div>
@@ -44,12 +44,12 @@ class Dashboard extends Component {
       <main>
         {this.state.isSignedIn ? (
           <section>
-         <h3 className="text-center">Bueno Chat</h3>
+         <h3 className="text-center bueno-chat">Bueno Chat</h3>
         <Modal show={this.state.show} handleClose={this.hideModal}>
-        <p>Show Chat</p>
+        <p className="bueno-chat">Show Chat</p>
         <Chat username={firebase.auth().currentUser}/>
         </Modal>
-        <button type="button" onClick={this.showModal} className="btn btn-primary">
+        <button type="button" onClick={this.showModal} className="btn btn-danger open-chat">
          open chat
         </button>
         </section>

@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import "./Nav.css";
-import { Link } from "react-router-dom";
-import firebase from "firebase";
+import React, { Component } from 'react';
+import './Nav.css';
+import { Link } from 'react-router-dom';
+import firebase from 'firebase';
 
-import { auth, provider, startFirebaseUI } from "../Firebase/Firebaseconfig";
+import { auth, provider, startFirebaseUI } from '../Firebase/Firebaseconfig';
 
 class Nav extends Component {
   constructor() {
     super();
     this.state = {
-      username: "",
+      username: '',
       user: null
     };
     // this.handleChange = this.handleChange.bind(this);
@@ -19,7 +19,7 @@ class Nav extends Component {
   }
 
   componentDidMount() {
-    startFirebaseUI("#firebaseui");
+    startFirebaseUI('#firebaseui');
     auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
@@ -51,7 +51,7 @@ class Nav extends Component {
   }
 
   render() {
-    let img = "";
+    let img = '';
     if (firebase.auth().currentUser != undefined) {
       if (firebase.auth().currentUser.photoURL != undefined) {
         if (firebase.auth().currentUser.photoURL.length > 0) {
@@ -74,12 +74,12 @@ class Nav extends Component {
               Bueno
             </a>
             <span className="navbar-text mr-auto">
-              <Link to="/" className={"btn btn-primary"}>
+              <Link to="/" className={'btn btn-primary'}>
                 Home
               </Link>
               <span />
               {this.state.user ? (
-                <Link to="/game" className={"btn btn-primary"}>
+                <Link to="/game" className={'btn btn-primary'}>
                   Game
                 </Link>
               ) : (
@@ -113,7 +113,7 @@ class Nav extends Component {
             </span>
           ) : (
             <span className="navbar-text small text-truncate mt-1 text-right order-1 order-md-last">
-              <Link to="/" className={"btn btn-primary"}>
+              <Link to="/" className={'btn btn-primary'}>
                 Login
               </Link>
             </span>

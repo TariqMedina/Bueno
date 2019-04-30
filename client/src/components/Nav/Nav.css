@@ -22,11 +22,11 @@ body {
 
 .bueno-nav {
   padding: 10px;
-  background-color: red;
+  background-color: gold;
 }
 
 .bueno-nav a{
-  color: white;
+  color: rgb(53, 53, 53);
 }
 
 .bueno-brand-text {
@@ -42,11 +42,15 @@ body {
   margin-left: 20px;
 }
 
+.btn-primary {
+  color: white !important;
+}
+
 .welcome-container {
   text-align: right !important;
   max-width: 100%;
   padding-top: 10px;
-  color: white;
+  color: rgb(53, 53, 53);
   margin: auto;
 
 }

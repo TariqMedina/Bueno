@@ -3,6 +3,8 @@ import Modal from 'react-bootstrap/Modal'
 import { Col, Row, Container } from "../components/Grid";
 import cards from "./cards.js"
 import "./style.css";
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8000');
 
 const Player1 = {
     name: "Player1",
@@ -24,11 +26,8 @@ const Player4 = {
 
 var myDeck = [];
 let backCard = cards.splice(cards.length - 1, 1);
-console.log(backCard)
-console.log(myDeck.length);
 
-
-function startgame (){
+function startgame() {
     myDeck = shuffle(cards);
 
     Player1.cards = myDeck.splice(0, 7);
@@ -51,9 +50,13 @@ function shuffle(a) {
     return a;
 }
 
+var myname = "Player";
+
 class Game extends Component {
     state = {
         allPlayers: [Player1, Player2, Player3, Player4],
+        playerOrder: [],
+        setPlayers: 0,
         // card,
         Player1: Player1,
         Player2: Player2,
@@ -82,17 +85,159 @@ class Game extends Component {
 
     componentDidMount() {
         let player = this.state.Player1;
-        player.isActive = true;
+        // player.isActive = true;
+        // this.setState({Player1:player});
+        socket.on('stateChange', (myState) => { this.defineOrder(myState) });
+        var playerName = window.prompt("Please enter your username");
+        myname = playerName;
+        this.addPlayer(playerName);       
+        socket.on('playerAdded', (currentState)=>this.setNewPlayer(currentState))
+
+    }
+
+    defineOrder = (myState) => {
+        console.log(myState)
+        let current = myState.currentPlayer;
+        let statePlayer = myState.allPlayers;
+        let thisPlayer = myState.allPlayers[current];
+        let allPlayer = [];
+        var myIndex = statePlayer.findIndex(x => x.name === myname);
+        if (myIndex===0){
+            allPlayer[0] = statePlayer[0];
+            allPlayer[1] = statePlayer[1];
+            allPlayer[2] = statePlayer[2];
+            allPlayer[3] = statePlayer[3];
+            current = allPlayer.findIndex(x => x.name === thisPlayer.name);
+        }
+        else if (myIndex===1){
+            allPlayer[0] = statePlayer[1];
+            allPlayer[1] = statePlayer[2];
+            allPlayer[2] = statePlayer[3];
+            allPlayer[3] = statePlayer[0];
+            current = allPlayer.findIndex(x => x.name === thisPlayer.name);
+        }
+        else if (myIndex===2){
+            allPlayer[0] = statePlayer[2];
+            allPlayer[1] = statePlayer[3];
+            allPlayer[2] = statePlayer[0];
+            allPlayer[3] = statePlayer[1];
+            current = allPlayer.findIndex(x => x.name === thisPlayer.name);
+        }
+        else if (myIndex===3){
+            allPlayer[0] = statePlayer[3];
+            allPlayer[1] = statePlayer[0];
+            allPlayer[2] = statePlayer[1];
+            allPlayer[3] = statePlayer[2];
+            current = allPlayer.findIndex(x => x.name === thisPlayer.name);
+        }
         this.setState({
-            Player1: player
+            allPlayers: allPlayer,
+            Player1: allPlayer[0],
+            Player2: allPlayer[1],
+            Player3: allPlayer[2],
+            Player4: allPlayer[3],
+            currentPlayer: current,
+            playCard: myState.playCard,
+            alert: thisPlayer.name+"'s turn"
         })
     }
 
+    setNewPlayer = (currentState) => {
+        console.log(currentState.allPlayers)
+        var playerName = currentState.playerName;
+        var setPlayers = currentState.setPlayers + 1;
+        console.log(setPlayers);
+        var allPlayer = currentState.allPlayers;
+        if (setPlayers === 1) {
+            allPlayer[0].name = playerName
+
+        }
+        else if (setPlayers === 2) {
+            allPlayer[1].name = playerName
+        }
+        else if (setPlayers === 3) {
+            allPlayer[2].name = playerName
+        }
+        else if(setPlayers=== 4){
+            allPlayer[3].name = playerName;
+            startgame();
+        }
+        // console.log(allPlayer);
+        this.setState({
+            playerOrder: [allPlayer[0].name, allPlayer[1].name, allPlayer[2].name, allPlayer[3].name] 
+        })
+        this.defineOrderStart(allPlayer, setPlayers);
+        this.setState({
+            setPlayers: setPlayers,
+            allPlayers: allPlayer,
+            Player1: allPlayer[0],
+            Player2: allPlayer[1],
+            Player3: allPlayer[2],
+            Player4: allPlayer[3],
+            alert: "Waiting for players"
+        })
+        console.log(setPlayers)
+        
+
+        socket.emit('setPlayer',this.state)
+        if (setPlayers===4){
+            this.startNew();
+        }
+    }
+
+    defineOrderStart = (allPlayer, setPlayers) =>{
+        var myindex = allPlayer.findIndex(x => x.name === myname);
+        if (myindex!==0){
+            let existingPlayer = allPlayer.splice(0,myindex);
+            allPlayer.push(... existingPlayer);
+            console.log(allPlayer);
+            // return allPlayer;
+        }
+    }
+
+    startNew = () => {
+        var players = this.state.playerOrder;
+        var allPlayer = this.state.allPlayers;
+        console.log("Starting the game")
+        var myIndex = allPlayer.findIndex(x => x.name === players[0]);
+        allPlayer[myIndex].isActive = true;
+        this.setState({
+            allPlayers: allPlayer,
+            Player1: allPlayer[0],
+            Player2: allPlayer[1],
+            Player3: allPlayer[2],
+            Player4: allPlayer[3],
+            currentPlayer: myIndex,
+            alert: "Start the game! " + allPlayer[myIndex].name + "'s turn"
+        });
+        console.log(this.state)
+    }
+
+    addPlayer = (playerName) => {
+        socket.emit('connected', playerName);
+        var setPlayers = this.state.setPlayers + 1;
+        console.log(setPlayers);
+        var allPlayer = this.state.allPlayers;
+        if (setPlayers === 1) {
+            allPlayer[0].name = playerName
+
+        }
+        this.setState({
+            setPlayers: setPlayers,
+            allPlayers: allPlayer,
+            Player1: allPlayer[0],
+            Player2: allPlayer[1],
+            Player3: allPlayer[2],
+            Player4: allPlayer[3],
+        }, ()=> {socket.emit('setPlayer',this.state)})
+        console.log(allPlayer)
+    }
+
     handleTurn = (card) => {
+        
+        let allPlayer = this.state.allPlayers;
         let current = this.state.currentPlayer;
         let thisPlayer = this.state.allPlayers[current];
-
-        let allPlayer = this.state.allPlayers;
 
         let inPlay = this.state.playCard;
         let turnOrder = this.state.turnOrder;
@@ -125,8 +270,8 @@ class Game extends Component {
             thisPlayer.cards = thisPlayer.cards.filter(function (a) {
                 return a !== card;
             })
-            if (thisPlayer.cards.length===0){
-                let message = "Player "+ (current+1)+ " wins!"
+            if (thisPlayer.cards.length === 0) {
+                let message = "Player " + (current + 1) + " wins!"
                 this.setState({
                     alert: message
                 })
@@ -168,8 +313,8 @@ class Game extends Component {
 
     }
 
-    handleVictory = () =>
-    {   setTimeout(()=>{
+    handleVictory = () => {
+        setTimeout(() => {
             window.location.reload();
         }, 3000)
 
@@ -177,9 +322,8 @@ class Game extends Component {
     }
 
     handleDraw = (n) => {
-        if (!this.state.drawn && this.state.playCard!="") {
+        if (!this.state.drawn && this.state.playCard !== "") {
             let current = this.state.currentPlayer;
-            console.log(current + 1);
             let thisPlayer = this.state.allPlayers[current];
             let drawPile = this.state.drawPile;
             let thisPlayerCards = thisPlayer.cards;
@@ -212,11 +356,11 @@ class Game extends Component {
                     Player2: allPlayer[1],
                     Player3: allPlayer[2],
                     Player4: allPlayer[3],
-                    alert: "Its Player " + (current + 1) + "'s turn"
+                    alert: "Its "+ thisPlayer.name + "'s turn"
                 })
             }
         }
-        else if (this.state.playCard===""){
+        else if (this.state.playCard === "") {
             this.setState({
                 alert: "You cannot draw on the first turn",
             })
@@ -240,13 +384,18 @@ class Game extends Component {
             Player4: allPlayer[3],
             currentPlayer: current,
             playCard: card,
-            alert: "Its Player " + (current + 1) + "'s turn"
+            alert: "Its " + newPlayer.name + "'s turn"
         }, () => {
             if (card.value === "draw2") {
                 this.handleDraw(2);
+                socket.emit('newState', this.state)
             }
             else if (card.value === "draw4") {
                 this.handleDraw(4);
+                socket.emit('newState', this.state)
+            }
+            else {
+                socket.emit('newState', this.state)
             }
         })
     }
@@ -273,8 +422,7 @@ class Game extends Component {
                 current = this.state.allPlayers.length - 2;
             }
             let newPlayer = this.state.allPlayers[current];
-            this.setPlayer(newPlayer, allPlayer, current, card
-            );
+            this.setPlayer(newPlayer, allPlayer, current, card);
         }
     }
 
@@ -372,8 +520,11 @@ class Game extends Component {
                     </Modal.Body>
                 </Modal>
                 <Row>
+                    <span>{myname?myname:"Not chosen"}</span>
+                </Row>
+                <Row>
                     <div className="col-md-3 mx-auto text-center" style={{ backgroundColor: this.state.Player1.isActive ? "green" : "" }}>
-                        <button>Player 1</button>
+                        <button className="btn btn-primary">{this.state.Player1.name}</button>
                     </div>
                 </Row>
                 <Row>
@@ -390,18 +541,19 @@ class Game extends Component {
                 </Row>
                 <Row>
                     <div className="col-md-3 text-center" style={{ backgroundColor: Player4.isActive ? "green" : "" }}>
-                        <button>Player 4</button>
+                        <button className="btn btn-primary">{this.state.Player4.name}</button>
                         <Row>
                             <div className="p4div">
                                 {this.state.Player4.cards.map(card => (
                                     <div key={card.id} style={{ height: p4cards }}>
-                                        <img className="p4cards" onClick={this.state.Player4.isActive ? () => this.handleTurn(card) : () => { }} alt={card.id} src={card.img}></img>
+                                        {/* <img className="p4cards" onClick={this.state.Player4.isActive ? () => this.handleTurn(card) : () => { }} alt={card.id} src={this.state.backCard.img}></img> */}
+                                        <img className="p4cards" alt={card.id} src={this.state.backCard.img}></img>
                                     </div>
                                 ))}
                             </div>
                         </Row>
                     </div>
-                    <div className="col-md-6 mytable">
+                    <div className="col-md-6 mytable" style={{ backgroundColor: this.state.playCard.color? this.state.playCard.color: "black"}}>
                         <Row>
                             <h2 className="mainMessage mx-auto">{this.state.alert}</h2>
                         </Row>
@@ -418,12 +570,12 @@ class Game extends Component {
                         </Row>
                     </div>
                     <div className="col-md-3 text-center" style={{ backgroundColor: Player2.isActive ? "green" : "" }}>
-                        <button>Player 2</button>
+                        <button className="btn btn-primary">{this.state.Player2.name}</button>
                         <Row>
                             <div className="p2div">
                                 {this.state.Player2.cards.map(card => (
                                     <div key={card.id} style={{ height: p2cards }}>
-                                        <img className="p2cards" onClick={this.state.Player2.isActive ? () => this.handleTurn(card) : () => { }} alt={card.id} src={card.img}></img>
+                                        <img className="p2cards" alt={card.id} src={this.state.backCard.img}></img>
                                     </div>
                                 ))}
                             </div>
@@ -433,7 +585,7 @@ class Game extends Component {
 
                 <Row>
                     <div className="col-md-3 mx-auto text-center" style={{ backgroundColor: Player3.isActive ? "green" : "" }}>
-                        <button>Player 3</button>
+                        <button className="btn btn-primary">{this.state.Player3.name}</button>
                     </div>
                 </Row>
                 <Row>
@@ -442,12 +594,12 @@ class Game extends Component {
                         <Row>
                             {this.state.Player3.cards.map(card => (
                                 <div key={card.id} style={{ width: p3cards }}>
-                                    <img className="mx-auto p1cards" onClick={this.state.Player3.isActive ? () => this.handleTurn(card) : () => { }} alt={card.id} src={card.img}></img>
+                                    <img className="mx-auto p1cards" alt={card.id} src={this.state.backCard.img}></img>
                                 </div>
                             ))}
                         </Row>
                     </div>
-                </Row>
+                </Row >
 
             </Container>
         );

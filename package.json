@@ -17,15 +17,18 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.18.11"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "express": "^4.16.3",
+    "firebase": "^5.10.0",
+    "firebaseui": "^3.5.2",
     "if-env": "^1.0.4",
     "mongoose": "^5.3.16",
-    "react-bootstrap": "^1.0.0-beta.8",
+    "react-firebase": "^2.2.8",
+    "react-firebaseui": "^3.1.2",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0"
   }

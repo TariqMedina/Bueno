@@ -1,0 +1,30 @@
+.profile-pic{
+     width: 32px;
+    height: 32px;
+    border-radius: 50%;
+} */
+
+li {
+    width: 80%;
+}
+
+button {
+    width: 100%;
+}
+
+.firebaseui-list-item {
+    width: 100%;
+    background-color: transparent;
+    box-shadow: none;
+    margin-top: 10px !important;
+}
+
+.home {
+    background-image: url("../Home/homeBG.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.full{
+    height: 400px;
+}

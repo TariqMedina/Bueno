@@ -17,11 +17,15 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/GoogleBooks");
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, './client/build/index.html'));
-// });
+//if deployed, use deployed database. Otherwise use the local mongoheadlines db
+var MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost/mongoBueno";
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true }).then(function() {
+  console.log("connected to db");
+});
+
 
 // Start the API server
 app.listen(PORT, function () {

@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-// import DeleteBtn from "../components/DeleteBtn";
-// import Jumbotron from "../components/Jumbotron";
-// import API from "../utils/API";
-// import { Link } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal'
 import { Col, Row, Container } from "../components/Grid";
 import cards from "./cards.js"
 import "./style.css";
-// import { List, ListItem } from "../components/List";
-// import { Input, TextArea, FormBtn } from "../components/Form";
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8000');
+
 const Player1 = {
     name: "Player1",
     isActive: false,
@@ -26,16 +24,19 @@ const Player4 = {
     isActive: false,
 };
 
+var myDeck = [];
 let backCard = cards.splice(cards.length - 1, 1);
-console.log(backCard)
-let myDeck = shuffle(cards);
-console.log(myDeck.length);
-Player1.cards = myDeck.splice(0, 7);
-Player2.cards = myDeck.splice(0, 7);
-Player3.cards = myDeck.splice(0, 7);
-Player4.cards = myDeck.splice(0, 7);
 
-console.log(myDeck.length);
+function startgame() {
+    myDeck = shuffle(cards);
+
+    Player1.cards = myDeck.splice(0, 7);
+    Player2.cards = myDeck.splice(0, 7);
+    Player3.cards = myDeck.splice(0, 7);
+    Player4.cards = myDeck.splice(0, 7);
+}
+
+startgame();
 
 
 function shuffle(a) {
@@ -49,14 +50,19 @@ function shuffle(a) {
     return a;
 }
 
+var myname = "Player";
+
 class Game extends Component {
     state = {
         allPlayers: [Player1, Player2, Player3, Player4],
+        playerOrder: [],
+        setPlayers: 0,
         // card,
-        Player1,
-        Player2,
-        Player3,
-        Player4,
+        Player1: Player1,
+        Player2: Player2,
+        Player3: Player3,
+        Player4: Player4,
+        showModal: false,
         drawn: false,
         backCard: backCard[0],
         alert: "Start the game! Player 1's turn",
@@ -71,53 +77,167 @@ class Game extends Component {
         playCard: ""
     };
 
-    componentDidMount() {
-        let player = this.state.Player1;
-        player.isActive = true;
+    showModal() {
         this.setState({
-            Player1: player
+            showModal: true
         })
     }
 
-    //   loadBooks = () => {
-    //     API.getBooks()
-    //       .then(res =>
-    //         this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-    //       )
-    //       .catch(err => console.log(err));
-    //   };
+    componentDidMount() {
+        let player = this.state.Player1;
+        // player.isActive = true;
+        // this.setState({Player1:player});
+        socket.on('stateChange', (myState) => { this.defineOrder(myState) });
+        var playerName = window.prompt("Please enter your username");
+        myname = playerName;
+        this.addPlayer(playerName);       
+        socket.on('playerAdded', (currentState)=>this.setNewPlayer(currentState))
 
-    //   deleteBook = id => {
-    //     API.deleteBook(id)
-    //       .then(res => this.loadBooks())
-    //       .catch(err => console.log(err));
-    //   };
+    }
 
-    //   handleInputChange = event => {
-    //     const { name, value } = event.target;
-    //     this.setState({
-    //       [name]: value
-    //     });
-    //   };
+    defineOrder = (myState) => {
+        console.log(myState)
+        let current = myState.currentPlayer;
+        let statePlayer = myState.allPlayers;
+        let thisPlayer = myState.allPlayers[current];
+        let allPlayer = [];
+        var myIndex = statePlayer.findIndex(x => x.name === myname);
+        if (myIndex===0){
+            allPlayer[0] = statePlayer[0];
+            allPlayer[1] = statePlayer[1];
+            allPlayer[2] = statePlayer[2];
+            allPlayer[3] = statePlayer[3];
+            current = allPlayer.findIndex(x => x.name === thisPlayer.name);
+        }
+        else if (myIndex===1){
+            allPlayer[0] = statePlayer[1];
+            allPlayer[1] = statePlayer[2];
+            allPlayer[2] = statePlayer[3];
+            allPlayer[3] = statePlayer[0];
+            current = allPlayer.findIndex(x => x.name === thisPlayer.name);
+        }
+        else if (myIndex===2){
+            allPlayer[0] = statePlayer[2];
+            allPlayer[1] = statePlayer[3];
+            allPlayer[2] = statePlayer[0];
+            allPlayer[3] = statePlayer[1];
+            current = allPlayer.findIndex(x => x.name === thisPlayer.name);
+        }
+        else if (myIndex===3){
+            allPlayer[0] = statePlayer[3];
+            allPlayer[1] = statePlayer[0];
+            allPlayer[2] = statePlayer[1];
+            allPlayer[3] = statePlayer[2];
+            current = allPlayer.findIndex(x => x.name === thisPlayer.name);
+        }
+        this.setState({
+            allPlayers: allPlayer,
+            Player1: allPlayer[0],
+            Player2: allPlayer[1],
+            Player3: allPlayer[2],
+            Player4: allPlayer[3],
+            currentPlayer: current,
+            playCard: myState.playCard,
+            alert: thisPlayer.name+"'s turn"
+        })
+    }
 
-    //   handleFormSubmit = event => {
-    //     event.preventDefault();
-    //     if (this.state.title && this.state.author) {
-    //       API.saveBook({
-    //         title: this.state.title,
-    //         author: this.state.author,
-    //         synopsis: this.state.synopsis
-    //       })
-    //         .then(res => this.loadBooks())
-    //         .catch(err => console.log(err));
-    //     }
-    //   };
+    setNewPlayer = (currentState) => {
+        console.log(currentState.allPlayers)
+        var playerName = currentState.playerName;
+        var setPlayers = currentState.setPlayers + 1;
+        console.log(setPlayers);
+        var allPlayer = currentState.allPlayers;
+        if (setPlayers === 1) {
+            allPlayer[0].name = playerName
+
+        }
+        else if (setPlayers === 2) {
+            allPlayer[1].name = playerName
+        }
+        else if (setPlayers === 3) {
+            allPlayer[2].name = playerName
+        }
+        else if(setPlayers=== 4){
+            allPlayer[3].name = playerName;
+            startgame();
+        }
+        // console.log(allPlayer);
+        this.setState({
+            playerOrder: [allPlayer[0].name, allPlayer[1].name, allPlayer[2].name, allPlayer[3].name] 
+        })
+        this.defineOrderStart(allPlayer, setPlayers);
+        this.setState({
+            setPlayers: setPlayers,
+            allPlayers: allPlayer,
+            Player1: allPlayer[0],
+            Player2: allPlayer[1],
+            Player3: allPlayer[2],
+            Player4: allPlayer[3],
+            alert: "Waiting for players"
+        })
+        console.log(setPlayers)
+        
+
+        socket.emit('setPlayer',this.state)
+        if (setPlayers===4){
+            this.startNew();
+        }
+    }
+
+    defineOrderStart = (allPlayer, setPlayers) =>{
+        var myindex = allPlayer.findIndex(x => x.name === myname);
+        if (myindex!==0){
+            let existingPlayer = allPlayer.splice(0,myindex);
+            allPlayer.push(... existingPlayer);
+            console.log(allPlayer);
+            // return allPlayer;
+        }
+    }
+
+    startNew = () => {
+        var players = this.state.playerOrder;
+        var allPlayer = this.state.allPlayers;
+        console.log("Starting the game")
+        var myIndex = allPlayer.findIndex(x => x.name === players[0]);
+        allPlayer[myIndex].isActive = true;
+        this.setState({
+            allPlayers: allPlayer,
+            Player1: allPlayer[0],
+            Player2: allPlayer[1],
+            Player3: allPlayer[2],
+            Player4: allPlayer[3],
+            currentPlayer: myIndex,
+            alert: "Start the game! " + allPlayer[myIndex].name + "'s turn"
+        });
+        console.log(this.state)
+    }
+
+    addPlayer = (playerName) => {
+        socket.emit('connected', playerName);
+        var setPlayers = this.state.setPlayers + 1;
+        console.log(setPlayers);
+        var allPlayer = this.state.allPlayers;
+        if (setPlayers === 1) {
+            allPlayer[0].name = playerName
+
+        }
+        this.setState({
+            setPlayers: setPlayers,
+            allPlayers: allPlayer,
+            Player1: allPlayer[0],
+            Player2: allPlayer[1],
+            Player3: allPlayer[2],
+            Player4: allPlayer[3],
+        }, ()=> {socket.emit('setPlayer',this.state)})
+        console.log(allPlayer)
+    }
 
     handleTurn = (card) => {
+        
+        let allPlayer = this.state.allPlayers;
         let current = this.state.currentPlayer;
         let thisPlayer = this.state.allPlayers[current];
-
-        let allPlayer = this.state.allPlayers;
 
         let inPlay = this.state.playCard;
         let turnOrder = this.state.turnOrder;
@@ -132,26 +252,55 @@ class Game extends Component {
             this.setState({
                 allPlayers: allPlayer
             })
-            current++;
-            let newPlayer = this.state.allPlayers[current];
-            this.setPlayer(newPlayer, allPlayer, current, card);
-        }
-        else if (inPlay.color === card.color || inPlay.value === card.value || card.color === "wild") {
-            thisPlayer.isActive = false;
-            thisPlayer.cards = thisPlayer.cards.filter(function (a) {
-                return a !== card;
-            })
-            allPlayer[current] = thisPlayer;
-            this.setState({
-                allPlayers: allPlayer
-            })
             if (card.value === "reverse") {
                 turnOrder = !turnOrder;
                 this.setState({
                     turnOrder: turnOrder
                 })
             }
-            this.handleNextTurn(turnOrder, current, allPlayer, card)
+            if (card.value === "skip") {
+                this.handleSkip(turnOrder, current, allPlayer, card)
+            }
+            else {
+                this.handleNextTurn(turnOrder, current, allPlayer, card)
+            }
+        }
+        else if (inPlay.color === card.color || inPlay.value === card.value || card.color === "wild") {
+            thisPlayer.isActive = false;
+            thisPlayer.cards = thisPlayer.cards.filter(function (a) {
+                return a !== card;
+            })
+            if (thisPlayer.cards.length === 0) {
+                let message = "Player " + (current + 1) + " wins!"
+                this.setState({
+                    alert: message
+                })
+                this.handleVictory();
+                return;
+            }
+            allPlayer[current] = thisPlayer;
+            this.setState({
+                allPlayers: allPlayer
+            })
+
+            if (card.value === "reverse") {
+                turnOrder = !turnOrder;
+                this.setState({
+                    turnOrder: turnOrder
+                })
+            }
+            if (card.color === "wild") {
+                this.setState({
+                    playCard: card,
+                    showModal: true
+                })
+            }
+            else if (card.value === "skip") {
+                this.handleSkip(turnOrder, current, allPlayer, card)
+            }
+            else {
+                this.handleNextTurn(turnOrder, current, allPlayer, card)
+            }
         }
         else {
             thisPlayer.isActive = true;
@@ -164,10 +313,17 @@ class Game extends Component {
 
     }
 
+    handleVictory = () => {
+        setTimeout(() => {
+            window.location.reload();
+        }, 3000)
+
+
+    }
+
     handleDraw = (n) => {
-        if (!this.state.drawn) {
+        if (!this.state.drawn && this.state.playCard !== "") {
             let current = this.state.currentPlayer;
-            console.log(current + 1);
             let thisPlayer = this.state.allPlayers[current];
             let drawPile = this.state.drawPile;
             let thisPlayerCards = thisPlayer.cards;
@@ -200,9 +356,14 @@ class Game extends Component {
                     Player2: allPlayer[1],
                     Player3: allPlayer[2],
                     Player4: allPlayer[3],
-                    alert: "Its Player " + (current + 1) + "'s turn"
+                    alert: "Its "+ thisPlayer.name + "'s turn"
                 })
             }
+        }
+        else if (this.state.playCard === "") {
+            this.setState({
+                alert: "You cannot draw on the first turn",
+            })
         }
         else {
             this.setState({
@@ -223,13 +384,18 @@ class Game extends Component {
             Player4: allPlayer[3],
             currentPlayer: current,
             playCard: card,
-            alert: "Its Player " + (current + 1) + "'s turn"
+            alert: "Its " + newPlayer.name + "'s turn"
         }, () => {
             if (card.value === "draw2") {
                 this.handleDraw(2);
+                socket.emit('newState', this.state)
             }
-            else if (card.value === "draw4"){
+            else if (card.value === "draw4") {
                 this.handleDraw(4);
+                socket.emit('newState', this.state)
+            }
+            else {
+                socket.emit('newState', this.state)
             }
         })
     }
@@ -238,27 +404,48 @@ class Game extends Component {
         if (turnOrder) {
 
             current += 2;
-            if (current > (this.state.allPlayers.length - 1)) {
+            if (current === (this.state.allPlayers.length)) {
                 current = 0;
             }
-            else if (current < 0) {
-                current = this.state.allPlayers.length - 1;
+            else if (current > this.state.allPlayers.length) {
+                current = 1;
             }
             let newPlayer = this.state.allPlayers[current];
             this.setPlayer(newPlayer, allPlayer, current, card);
         }
         else {
             current -= 2;
-            if (current > (this.state.allPlayers.length - 1)) {
-                current = 0;
-            }
-            else if (current < 0) {
+            if (current === -1) {
                 current = this.state.allPlayers.length - 1;
             }
+            else if (current === -2) {
+                current = this.state.allPlayers.length - 2;
+            }
             let newPlayer = this.state.allPlayers[current];
-            this.setPlayer(newPlayer, allPlayer, current, card
-            );
+            this.setPlayer(newPlayer, allPlayer, current, card);
         }
+    }
+
+    handlePass = (card) => {
+        if (card.function !== "value") {
+            card.value = "skip2";
+            this.handleTurn(card)
+        }
+        else {
+            this.handleTurn(card)
+        }
+    }
+
+    handleWild = (color) => {
+        let current = this.state.currentPlayer;
+        let allPlayer = this.state.allPlayers;
+        let card = this.state.playCard;
+        let turnOrder = this.state.turnOrder;
+        card.color = color;
+        this.setState({
+            showModal: false
+        })
+        this.handleNextTurn(turnOrder, current, allPlayer, card);
     }
 
     handleNextTurn = (turnOrder, current, allPlayer, card) => {
@@ -283,12 +470,12 @@ class Game extends Component {
                 current = this.state.allPlayers.length - 1;
             }
             let newPlayer = this.state.allPlayers[current];
-            this.setPlayer(newPlayer, allPlayer, current, card
-            );
+            this.setPlayer(newPlayer, allPlayer, current, card);
         }
     }
 
     render() {
+        let modalClose = () => this.setState({ showModal: false });
         var p1cards = 100 / this.state.Player1.cards.length + "%";
         var p4cards = 100 / this.state.Player4.cards.length + "%";
         var p2cards = 100 / this.state.Player2.cards.length + "%";
@@ -296,9 +483,48 @@ class Game extends Component {
         return (
             <Container fluid="true">
 
+
+                <Modal
+                    show={this.state.showModal}
+                    onHide={modalClose}
+                    aria-labelledby="example-modal-sizes-title-lg"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-lg">
+                            Choose color
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Row>
+                            <Col size="md-3">
+                                <div className="rounded" style={{ height: 100, backgroundColor: "red" }} onClick={() => this.handleWild("red")}>
+
+                                </div>
+                            </Col>
+                            <Col size="md-3">
+                                <div className="rounded" style={{ height: 100, backgroundColor: "blue" }} onClick={() => this.handleWild("blue")}>
+
+                                </div>
+                            </Col>
+                            <Col size="md-3">
+                                <div className="rounded" style={{ height: 100, backgroundColor: "orange" }} onClick={() => this.handleWild("yellow")}>
+
+                                </div>
+                            </Col>
+                            <Col size="md-3">
+                                <div className="rounded" style={{ height: 100, backgroundColor: "green" }} onClick={() => this.handleWild("green")}>
+
+                                </div>
+                            </Col>
+                        </Row>
+                    </Modal.Body>
+                </Modal>
+                <Row>
+                    <span>{myname?myname:"Not chosen"}</span>
+                </Row>
                 <Row>
                     <div className="col-md-3 mx-auto text-center" style={{ backgroundColor: this.state.Player1.isActive ? "green" : "" }}>
-                        <button>Player 1</button>
+                        <button className="btn btn-primary">{this.state.Player1.name}</button>
                     </div>
                 </Row>
                 <Row>
@@ -306,7 +532,7 @@ class Game extends Component {
                     <div className="col-md-6 p1div">
                         <Row>
                             {this.state.Player1.cards.map(card => (
-                                <div style={{ width: p1cards }}>
+                                <div key={card.id} style={{ width: p1cards }}>
                                     <img className="mx-auto p1cards" onClick={this.state.Player1.isActive ? () => this.handleTurn(card) : () => { }} alt={card.id} src={card.img}></img>
                                 </div>
                             ))}
@@ -315,20 +541,24 @@ class Game extends Component {
                 </Row>
                 <Row>
                     <div className="col-md-3 text-center" style={{ backgroundColor: Player4.isActive ? "green" : "" }}>
-                        <button>Player 4</button>
+                        <button className="btn btn-primary">{this.state.Player4.name}</button>
                         <Row>
                             <div className="p4div">
                                 {this.state.Player4.cards.map(card => (
-                                    <div style={{ height: p4cards }}>
-                                        <img className="p4cards" onClick={this.state.Player4.isActive ? () => this.handleTurn(card) : () => { }} alt={card.id} src={card.img}></img>
+                                    <div key={card.id} style={{ height: p4cards }}>
+                                        {/* <img className="p4cards" onClick={this.state.Player4.isActive ? () => this.handleTurn(card) : () => { }} alt={card.id} src={this.state.backCard.img}></img> */}
+                                        <img className="p4cards" alt={card.id} src={this.state.backCard.img}></img>
                                     </div>
                                 ))}
                             </div>
                         </Row>
                     </div>
-                    <div className="col-md-6 mytable">
+                    <div className="col-md-6 mytable" style={{ backgroundColor: this.state.playCard.color? this.state.playCard.color: "black"}}>
                         <Row>
                             <h2 className="mainMessage mx-auto">{this.state.alert}</h2>
+                        </Row>
+                        <Row>
+                            <button className="btn btn-success mx-auto" style={this.state.drawn ? {} : { display: "none" }} onClick={() => this.handlePass(this.state.playCard)}>Pass</button>
                         </Row>
                         <Row>
                             <div className="col-md-6 text-center">
@@ -340,12 +570,12 @@ class Game extends Component {
                         </Row>
                     </div>
                     <div className="col-md-3 text-center" style={{ backgroundColor: Player2.isActive ? "green" : "" }}>
-                        <button>Player 2</button>
+                        <button className="btn btn-primary">{this.state.Player2.name}</button>
                         <Row>
                             <div className="p2div">
                                 {this.state.Player2.cards.map(card => (
-                                    <div style={{ height: p2cards }}>
-                                        <img className="p2cards" onClick={this.state.Player2.isActive ? () => this.handleTurn(card) : () => { }} alt={card.id} src={card.img}></img>
+                                    <div key={card.id} style={{ height: p2cards }}>
+                                        <img className="p2cards" alt={card.id} src={this.state.backCard.img}></img>
                                     </div>
                                 ))}
                             </div>
@@ -355,7 +585,7 @@ class Game extends Component {
 
                 <Row>
                     <div className="col-md-3 mx-auto text-center" style={{ backgroundColor: Player3.isActive ? "green" : "" }}>
-                        <button>Player 3</button>
+                        <button className="btn btn-primary">{this.state.Player3.name}</button>
                     </div>
                 </Row>
                 <Row>
@@ -363,13 +593,13 @@ class Game extends Component {
                     <div className="col-md-6 p1div">
                         <Row>
                             {this.state.Player3.cards.map(card => (
-                                <div style={{ width: p3cards }}>
-                                    <img className="mx-auto p1cards" onClick={this.state.Player3.isActive ? () => this.handleTurn(card) : () => { }} alt={card.id} src={card.img}></img>
+                                <div key={card.id} style={{ width: p3cards }}>
+                                    <img className="mx-auto p1cards" alt={card.id} src={this.state.backCard.img}></img>
                                 </div>
                             ))}
                         </Row>
                     </div>
-                </Row>
+                </Row >
 
             </Container>
         );

@@ -1,55 +1,58 @@
-import React, { Component } from "react";
-import "./style.css";
-import firebase from "firebase";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import image from "./bueno-logo.png";
+import React, { Component } from 'react';
+import './style.css';
+import firebase from 'firebase';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import image from './bueno-logo.png';
 
 class Jumbotron extends Component {
   state = { isSignedIn: false };
-uiConfig = {
-  signInFlow: "popup",
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
-  ],
-  callbacks: {
-    signInSuccess: () => false
+  uiConfig = {
+    signInFlow: 'popup',
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID
+    ],
+    callbacks: {
+      signInSuccess: () => false
+    }
+  };
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({ isSignedIn: !!user });
+    });
   }
-};
 
-componentDidMount() {
-  firebase.auth().onAuthStateChanged(user => {
-    this.setState({ isSignedIn: !!user });
-  });
-}
-
-render() {
-  return (
-    <div className="jumbotron text-center">
-      <img className="bueno-logo" src={image}></img>
-      <p className="intro-text">
-      Spice up your life with Bueno, a digital version of Uno, the popular card game!
-      </p>
-      {this.state.isSignedIn ? (
-              <div>
-              
-              <h2>Welcome to Bueno, {firebase.auth().currentUser.displayName}!</h2>
-              <br></br>
-              <br></br>
-                  <a className="btn btn-primary btn-lg" href="/game" role="button">Join the Game!</a>
-              </div>
-              
-            ) : (
-      // <a className="btn btn-primary btn-lg" href="/login" role="button">Log in to play!</a>
-      <span>
-                  <StyledFirebaseAuth
-                    uiConfig={this.uiConfig}
-                    firebaseAuth={firebase.auth()}
-                  />
-                </span>
-            )}
-    </div>
+  render() {
+    return (
+      <div className="jumbotron text-center">
+        <img className="bueno-logo" src={image} />
+        <p className="intro-text">
+          Spice up your life with Bueno, a digital version of Uno, the popular
+          card game!
+        </p>
+        {this.state.isSignedIn ? (
+          <div>
+            <h2>
+              Welcome to Bueno, {firebase.auth().currentUser.displayName}!
+            </h2>
+            <br />
+            <br />
+            <a className="btn btn-primary btn-lg" href="/game" role="button">
+              Join the Game!
+            </a>
+          </div>
+        ) : (
+          // <a className="btn btn-primary btn-lg" href="/login" role="button">Log in to play!</a>
+          <span>
+            <StyledFirebaseAuth
+              uiConfig={this.uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
+          </span>
+        )}
+      </div>
     );
   }
 }

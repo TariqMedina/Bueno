@@ -1,7 +1,7 @@
 {
-  "name": "mern",
+  "name": "bueno",
   "version": "1.0.0",
-  "description": "",
+  "description": "A digital version of UNO, the popular card game",
   "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",

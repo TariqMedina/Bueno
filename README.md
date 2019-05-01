@@ -1,123 +1,116 @@
 <h1 align="center">
-  <br>
-  <a href="https://bueno-f4782.firebaseapp.com/"><img src="../" alt="Markdownify" width="200"></a>
-  <br>
-  Markdownify
-  <br>
+	<img
+		width="300"
+		alt="Bueno"
+		src="https://github.com/TariqMedina/Bueno/blob/master/client/src/components/Jumbotron/bueno-logo.png">
 </h1>
 
-<h4 align="center">A minimal Markdown Editor desktop app built on top of <a href="http://electron.atom.io" target="_blank">Electron</a>.</h4>
+<h3 align="center">
+	Bueno, a digital version of UNO, the popular card game.
+</h3>
 
 <p align="center">
-  <a href="https://badge.fury.io/js/electron-markdownify">
-    <img src="https://badge.fury.io/js/electron-markdownify.svg"
-         alt="Gitter">
-  </a>
-  <a href="https://gitter.im/amitmerchant1990/electron-markdownify"><img src="https://badges.gitter.im/amitmerchant1990/electron-markdownify.svg"></a>
-  <a href="https://saythanks.io/to/amitmerchant1990">
-      <img src="https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg">
-  </a>
-  <a href="https://www.paypal.me/AmitMerchant">
-    <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat">
-  </a>
+	<strong>
+		<a href="https://github.com/TariqMedina/Bueno">Website</a>
+		•
+		<a href="https://github.com/TariqMedina/Bueno">Docs</a>
+		•
+		<a href="https://demo.thelounge.chat/">Demo</a>
+	</strong>
+</p>
+<p align="center">
+	<a href="https://demo.thelounge.chat/"><img
+		alt="#thelounge IRC channel on freenode"
+		src="https://img.shields.io/badge/freenode-%23thelounge-415364.svg?colorA=ff9e18&style=flat-square"></a>
+	<br>
+	<a href="https://yarn.pm/thelounge"><img
+		alt="npm version"
+		src="https://img.shields.io/npm/v/thelounge.svg?style=flat-square&maxAge=3600"></a>
+	<a href="https://travis-ci.com/thelounge/thelounge"><img
+		alt="Travis CI Build Status"
+		src="https://img.shields.io/travis/com/thelounge/thelounge/master.svg?style=flat-square&maxAge=60"></a>
+	<a href="https://david-dm.org/thelounge/thelounge"><img
+		alt="Dependencies Status"
+		src="https://img.shields.io/david/thelounge/thelounge.svg?style=flat-square&maxAge=3600"></a>
+	<a href="https://npm-stat.com/charts.html?package=thelounge&from=2016-02-12"><img
+		alt="Total downloads on npm"
+		src="https://img.shields.io/npm/dt/thelounge.svg?colorB=007dc7&style=flat-square&maxAge=3600"></a>
 </p>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#related">Related</a> •
-  <a href="#license">License</a>
+	<img src="https://raw.githubusercontent.com/thelounge/thelounge.github.io/master/img/thelounge-screenshot.png" width="550">
 </p>
 
-![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
+## Overview
 
-## Key Features
+- **Modern features brought to IRC.** Push notifications, link previews, new message markers, and more bring IRC to the 21st century.
+- **Always connected.** Remains connected to IRC servers while you are offline.
+- **Cross platform.** It doesn't matter what OS you use, it just works wherever Node.js runs.
+- **Responsive interface.** The client works smoothly on every desktop, smartphone and tablet.
+- **Synchronized experience.** Always resume where you left off no matter what device.
 
-- LivePreview - Make changes, See changes
-  - Instantly see what your Markdown documents look like in HTML as you create them.
-- Sync Scrolling
-  - While you type, LivePreview will automatically scroll to the current location you're editing.
-- GitHub Flavored Markdown
-- Syntax highlighting
-- [KaTeX](https://khan.github.io/KaTeX/) Support
-- Dark/Light mode
-- Toolbar for basic Markdown formatting
-- Supports multiple cursors
-- Save the Markdown preview as PDF
-- Emoji support in preview :tada:
-- App will keep alive in tray for quick usage
-- Full screen mode
-  - Write distraction free.
-- Cross platform
-  - Windows, macOS and Linux ready.
+To learn more about configuration, usage and features of The Lounge, take a look at [the website](https://thelounge.chat).
 
-## How To Use
+The Lounge is the official and community-managed fork of [Shout](https://github.com/erming/shout), by [Mattias Erming](https://github.com/erming).
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+## Installation and usage
 
-```bash
-# Clone this repository
-$ git clone https://github.com/amitmerchant1990/electron-markdownify
+The Lounge requires [Node.js](https://nodejs.org/) v6 or more recent.
+[Yarn package manager](https://yarnpkg.com/) is also recommended.  
+If you want to install with npm, `--unsafe-perm` is required for a correct install.
 
-# Go into the repository
-$ cd electron-markdownify
+### Running stable releases using Yarn (recommended)
 
-# Install dependencies
-$ npm install
+Run this in a terminal to install (or upgrade) the latest stable release from
+[npm registry](https://www.npmjs.com/):
 
-# Run the app
-$ npm start
+```sh
+yarn global add thelounge
 ```
 
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+If you already have The Lounge installed globally, use the following command to update it:
 
-## Download
+```sh
+yarn global upgrade thelounge
+```
 
-You can [download](https://github.com/amitmerchant1990/electron-markdownify/releases/tag/v1.2.0) the latest installable version of Markdownify for Windows, macOS and Linux.
+When installation is complete, run:
 
-## Emailware
+```sh
+thelounge start
+```
 
-Markdownify is an [emailware](https://en.wiktionary.org/wiki/emailware). Meaning, if you liked using this app or has helped you in anyway, I'd like you send me an email on <bullredeyes@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
+For more information, read the [usage documentation](https://thelounge.chat/docs/usage) or run:
 
-## Credits
+```sh
+thelounge --help
+```
 
-This software uses the following open source packages:
+### Running from source
 
-- [Electron](http://electron.atom.io/)
-- [Node.js](https://nodejs.org/)
-- [Marked - a markdown parser](https://github.com/chjj/marked)
-- [showdown](http://showdownjs.github.io/showdown/)
-- [CodeMirror](http://codemirror.net/)
-- Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
-- [highlight.js](https://highlightjs.org/)
+The following commands install and run the development version of The Lounge:
 
-## Related
+```sh
+git clone https://github.com/thelounge/thelounge.git
+cd thelounge
+yarn install
+NODE_ENV=production yarn build
+yarn start
+```
 
-[markdownify-web](https://github.com/amitmerchant1990/markdownify-web) - Web version of Markdownify
+When installed like this, `thelounge` executable is not created. Use `node index <command>` to run commands.
 
-## Support
+⚠️ While it is the most recent codebase, this is not production-ready! Run at
+your own risk. It is also not recommended to run this as root.
 
-<a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+## Development setup
 
-<p>Or</p>
+Simply follow the instructions to run The Lounge from source above, on your own
+fork.
 
-<a href="https://www.patreon.com/amitmerchant">
-	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
+Before submitting any change, make sure to:
 
-## You may also like...
-
-- [Pomolectron](https://github.com/amitmerchant1990/pomolectron) - A pomodoro app
-- [Correo](https://github.com/amitmerchant1990/correo) - A menubar/taskbar Gmail App for Windows and macOS
-
-## License
-
-MIT
-
----
-
-> [amitmerchant.com](https://www.amitmerchant.com) &nbsp;&middot;&nbsp;
-> GitHub [@amitmerchant1990](https://github.com/amitmerchant1990) &nbsp;&middot;&nbsp;
-> Twitter [@amit_merchant](https://twitter.com/amit_merchant)
+- Read the [Contributing instructions](https://github.com/thelounge/thelounge/blob/master/.github/CONTRIBUTING.md#contributing)
+- Run `yarn test` to execute linters and test suite
+- Run `yarn build` if you change or add anything in `client/js` or `client/views`
+- `yarn dev` can be used to start The Lounge and watch for any file changes in the client folder

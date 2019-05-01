@@ -8,11 +8,15 @@
   max-width: 400px;
   margin-bottom: 40px;
 }
+.join-btn {
+  width: auto;
+}
 
-h1{
+h1 {
   font-size: 3em;
 }
 
 .intro-text {
   font-size: 1.5rem;
 }
+

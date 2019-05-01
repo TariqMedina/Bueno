@@ -9,25 +9,28 @@ export default class Form extends Component {
     this.state = {
       user: firebase.auth().currentUser.displayName,
       message: '',
-      list: [],
+      list: []
     };
-    this.messageRef = firebase.database().ref().child('messages');
+    this.messageRef = firebase
+      .database()
+      .ref()
+      .child('messages');
     this.listenMessages();
   }
   componentWillReceiveProps(nextProps) {
-    if(nextProps.user) {
-      this.setState({'user': nextProps.user.displayName});
+    if (nextProps.user) {
+      this.setState({ user: nextProps.user.displayName });
     }
   }
   handleChange(event) {
-    this.setState({message: event.target.value});
+    this.setState({ message: event.target.value });
   }
   handleSend() {
     if (this.state.message) {
       var newItem = {
         user: this.state.user,
-        message: this.state.message,
-      }
+        message: this.state.message
+      };
       this.messageRef.push(newItem);
       console.log(this.state.user);
       this.setState({ message: '' });
@@ -52,22 +55,24 @@ export default class Form extends Component {
   //     });
   // }
   listenMessages() {
-    this.messageRef
-      .limitToLast(10)
-      .on('value', message => {
-        this.setState({
-          list: Object.values(message.val()),
-        });
+    this.messageRef.limitToLast(10).on('value', message => {
+      this.setState({
+        list: Object.values(message.val())
       });
+    });
   }
-
 
   render() {
     return (
-      <div style={{zIndex:1000}} className="form">
+      <div
+        style={{ position: 'fixed', bottom: 0, right: 0, zIndex: 5000 }}
+        className="form"
+      >
         <div className="form__message">
-          { this.state.list.map((item, index) =>
-            <Message key={index} message={item} />
+          {this.state.list.map(
+            (item, index) => (
+              <Message key={index} message={item} />
+            )
             // item-component as key eg. username+something else
           )}
         </div>
@@ -80,10 +85,7 @@ export default class Form extends Component {
             onChange={this.handleChange.bind(this)}
             onKeyPress={this.handleKeyPress.bind(this)}
           />
-          <button
-            className="form__button"
-            onClick={this.handleSend.bind(this)}
-          >
+          <button className="form__button" onClick={this.handleSend.bind(this)}>
             send
           </button>
         </div>

@@ -1,116 +1,69 @@
-<h1 align="center">
-	<img
-		width="300"
-		alt="Bueno"
-		src="https://github.com/TariqMedina/Bueno/blob/master/client/src/components/Jumbotron/bueno-logo.png">
-</h1>
+![logo](/client/public/assets/images/bueno-logo.png)
 
-<h3 align="center">
+<h1 align="center">
 	Bueno, a digital version of UNO, the popular card game.
-</h3>
+</h1>
 
 <p align="center">
 	<strong>
-		<a href="https://github.com/TariqMedina/Bueno">Website</a>
+		<a href="https://github.com/TariqMedina/Bueno">GitHub</a>
 		•
 		<a href="https://github.com/TariqMedina/Bueno">Docs</a>
 		•
-		<a href="https://demo.thelounge.chat/">Demo</a>
+		<a href="https://tranquil-sands-78512.herokuapp.com/">Demo</a>
 	</strong>
-</p>
-<p align="center">
-	<a href="https://demo.thelounge.chat/"><img
-		alt="#thelounge IRC channel on freenode"
-		src="https://img.shields.io/badge/freenode-%23thelounge-415364.svg?colorA=ff9e18&style=flat-square"></a>
-	<br>
-	<a href="https://yarn.pm/thelounge"><img
-		alt="npm version"
-		src="https://img.shields.io/npm/v/thelounge.svg?style=flat-square&maxAge=3600"></a>
-	<a href="https://travis-ci.com/thelounge/thelounge"><img
-		alt="Travis CI Build Status"
-		src="https://img.shields.io/travis/com/thelounge/thelounge/master.svg?style=flat-square&maxAge=60"></a>
-	<a href="https://david-dm.org/thelounge/thelounge"><img
-		alt="Dependencies Status"
-		src="https://img.shields.io/david/thelounge/thelounge.svg?style=flat-square&maxAge=3600"></a>
-	<a href="https://npm-stat.com/charts.html?package=thelounge&from=2016-02-12"><img
-		alt="Total downloads on npm"
-		src="https://img.shields.io/npm/dt/thelounge.svg?colorB=007dc7&style=flat-square&maxAge=3600"></a>
-</p>
-
-<p align="center">
-	<img src="https://raw.githubusercontent.com/thelounge/thelounge.github.io/master/img/thelounge-screenshot.png" width="550">
 </p>
 
 ## Overview
 
-- **Modern features brought to IRC.** Push notifications, link previews, new message markers, and more bring IRC to the 21st century.
-- **Always connected.** Remains connected to IRC servers while you are offline.
+- **Secure Login.** Use email, google or facebook to log in.
+- **Chat.** Chat with other players.
 - **Cross platform.** It doesn't matter what OS you use, it just works wherever Node.js runs.
 - **Responsive interface.** The client works smoothly on every desktop, smartphone and tablet.
-- **Synchronized experience.** Always resume where you left off no matter what device.
-
-To learn more about configuration, usage and features of The Lounge, take a look at [the website](https://thelounge.chat).
-
-The Lounge is the official and community-managed fork of [Shout](https://github.com/erming/shout), by [Mattias Erming](https://github.com/erming).
+- **Interactive Experience.** Powered by react and socket.io, the game is interractive.
 
 ## Installation and usage
 
-The Lounge requires [Node.js](https://nodejs.org/) v6 or more recent.
-[Yarn package manager](https://yarnpkg.com/) is also recommended.  
-If you want to install with npm, `--unsafe-perm` is required for a correct install.
-
-### Running stable releases using Yarn (recommended)
-
-Run this in a terminal to install (or upgrade) the latest stable release from
-[npm registry](https://www.npmjs.com/):
-
-```sh
-yarn global add thelounge
-```
-
-If you already have The Lounge installed globally, use the following command to update it:
-
-```sh
-yarn global upgrade thelounge
-```
-
-When installation is complete, run:
-
-```sh
-thelounge start
-```
-
-For more information, read the [usage documentation](https://thelounge.chat/docs/usage) or run:
-
-```sh
-thelounge --help
-```
+Bueno requires [Node.js](https://nodejs.org/) v6 or more recent.
 
 ### Running from source
 
 The following commands install and run the development version of The Lounge:
 
 ```sh
-git clone https://github.com/thelounge/thelounge.git
-cd thelounge
-yarn install
-NODE_ENV=production yarn build
-yarn start
+git clone https://github.com/TariqMedina/Bueno
+cd bueno
+npm install
+npm start
 ```
 
-When installed like this, `thelounge` executable is not created. Use `node index <command>` to run commands.
+### Technology used
 
-⚠️ While it is the most recent codebase, this is not production-ready! Run at
-your own risk. It is also not recommended to run this as root.
+- Front End: React.js
+- Backend: Node.js, Express,Websockets
+- Authentication & Chat: Firebase
 
-## Development setup
+## Screenshots
 
-Simply follow the instructions to run The Lounge from source above, on your own
-fork.
+### Home, Guest
 
-Before submitting any change, make sure to:
+![homeguest](/client/public/assets/images/bueno-home-01.png)
 
-- Read the [Contributing instructions](https://github.com/thelounge/thelounge/blob/master/.github/CONTRIBUTING.md#contributing)
-- Run `yarn test` to execute linters and test suite
-- Run `yarn build` if you change or add anything in `client/js` or `client/views`
-- `yarn dev` can be used to start The Lounge and watch for any file changes in the client folder
+### Home, Logged in user
+
+![homeloggedin](/client/public/assets/images/bueno-home-02.png)
+
+### Home, chat
+
+![homechat](/client/public/assets/images/bueno-home-03.png)
+
+### Game
+
+![homegame](/client/public/assets/images/game.png)
+
+### Contributers
+
+- Anthony Green: https://github.com/AnthonyVerde
+- Jessen Dasilva: https://github.com/jessendasilva1
+- Paskwa Mutunga: https://github.com/pmutunga
+- Tariq Medina: https://github.com/TariqMedina

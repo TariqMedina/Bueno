@@ -1,55 +1,67 @@
 .modal {
-    position: fixed;
-    width: 0px;
-    height: 0px;
-    background: rgba(0, 0, 0, 0.6);
-  }
+  position: fixed;
+  width: 0px;
+  height: 0px;
+  background: rgba(0, 0, 0, 0.6);
+}
 
-  .open-chat {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 200px;
-  }
+.open-chat {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+}
 
-  .modal-main {
-    position: fixed;
-    height: auto;
-    bottom: 0;
-    right: 0;
-    /*transform: translate(-20%,-20%);*/
-  }
-  
-  .display-block {
-    display: block;
-  }
-  
-  .display-none {
-    display: none;
-  }
+.modal-main {
+  position: fixed;
+  height: auto;
+  bottom: 0;
+  right: 0;
+  /*transform: translate(-20%,-20%);*/
+}
 
-  .close-btn {
-    position: fixed;
-    bottom: 500px;
-    right: 0px;
-    width: 100px;
-    text-align: center;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0);
-    border-color: rgba(255, 255, 255, 0);
-    color: black;
-    font-size: 20px;
-    z-index: 2000;
-  }
+.display-block {
+  display: block;
+}
 
-  .close-btn:hover{
-    background-color: rgba(255, 255, 255, 0);
-    border-color: rgba(255, 255, 255, 0);
-    color: #EB6864;
-  }
+.display-none {
+  display: none;
+}
 
-  .close-btn:active{
-    background-color: rgba(255, 255, 255, 0);
-    border-color: rgba(255, 255, 255, 0);
-    color: #EB6864;
-  }
+.close-btn {
+  position: fixed;
+  bottom: 500px;
+  right: 0px;
+  width: 100px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0);
+  border-color: rgba(255, 255, 255, 0);
+  color: black;
+  font-size: 20px;
+  z-index: 6000;
+}
+
+.close-btn:hover {
+  position: fixed;
+  bottom: 500px;
+  right: 0px;
+  width: 100px;
+  /* background-color: rgba(255, 255, 255, 0); */
+  background-color: black;
+  border-color: rgba(255, 255, 255, 0);
+  color: #eb6864;
+  z-index: 6000;
+}
+
+.close-btn:active {
+  position: fixed;
+  bottom: 500px;
+  right: 0px;
+  width: 100px;
+  /* background-color: rgba(255, 255, 255, 0); */
+  background-color: black;
+  border-color: rgba(255, 255, 255, 0);
+  color: #eb6864;
+  z-index: 6000;
+}

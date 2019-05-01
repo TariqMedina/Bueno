@@ -197,91 +197,91 @@ var card2 = [
     },
     {
         "id": 29,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "0",
         "img": require("../utils/cards-imgs/card-yellow-0.png")
     },
     {
         "id": 30,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "1",
         "img": require("../utils/cards-imgs/card-yellow-1.png")
     },
     {
         "id": 31,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "2",
         "img": require("../utils/cards-imgs/card-yellow-2.png")
     },
     {
         "id": 32,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "3",
         "img": require("../utils/cards-imgs/card-yellow-3.png")
     },
     {
         "id": 33,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "4",
         "img": require("../utils/cards-imgs/card-yellow-4.png")
     },
     {
         "id": 34,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "5",
         "img": require("../utils/cards-imgs/card-yellow-5.png")
     },
     {
         "id": 35,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "6",
         "img": require("../utils/cards-imgs/card-yellow-6.png")
     },
     {
         "id": 36,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "7",
         "img": require("../utils/cards-imgs/card-yellow-7.png")
     },
     {
         "id": 37,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "8",
         "img": require("../utils/cards-imgs/card-yellow-8.png")
     },
     {
         "id": 38,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "9",
         "img": require("../utils/cards-imgs/card-yellow-9.png")
     },
     {
         "id": 39,
-        "color": "yellow",
+        "color": "orange",
         "function": "action",
         "value": "skip",
         "img": require("../utils/cards-imgs/card-yellow-skip.png")
     },
     {
         "id": 40,
-        "color": "yellow",
+        "color": "orange",
         "function": "action",
         "value": "reverse",
         "img": require("../utils/cards-imgs/card-yellow-reverse.png")
     },
     {
         "id": 41,
-        "color": "yellow",
+        "color": "orange",
         "function": "action",
         "value": "draw2",
         "img": require("../utils/cards-imgs/card-yellow-draw-two.png")
@@ -484,84 +484,84 @@ var card2 = [
     },
     {
         "id": 70,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "1",
         "img": require("../utils/cards-imgs/card-yellow-1.png")
     },
     {
         "id": 71,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "2",
         "img": require("../utils/cards-imgs/card-yellow-2.png")
     },
     {
         "id": 72,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "3",
         "img": require("../utils/cards-imgs/card-yellow-3.png")
     },
     {
         "id": 73,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "4",
         "img": require("../utils/cards-imgs/card-yellow-4.png")
     },
     {
         "id": 74,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "5",
         "img": require("../utils/cards-imgs/card-yellow-5.png")
     },
     {
         "id": 75,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "6",
         "img": require("../utils/cards-imgs/card-yellow-6.png")
     },
     {
         "id": 76,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "7",
         "img": require("../utils/cards-imgs/card-yellow-7.png")
     },
     {
         "id": 77,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "8",
         "img": require("../utils/cards-imgs/card-yellow-8.png")
     },
     {
         "id": 78,
-        "color": "yellow",
+        "color": "orange",
         "function": "value",
         "value": "9",
         "img": require("../utils/cards-imgs/card-yellow-9.png")
     },
     {
         "id": 79,
-        "color": "yellow",
+        "color": "orange",
         "function": "action",
         "value": "skip",
         "img": require("../utils/cards-imgs/card-yellow-skip.png")
     },
     {
         "id": 80,
-        "color": "yellow",
+        "color": "orange",
         "function": "action",
         "value": "reverse",
         "img": require("../utils/cards-imgs/card-yellow-reverse.png")
     },
     {
         "id": 81,
-        "color": "yellow",
+        "color": "orange",
         "function": "action",
         "value": "draw2",
         "img": require("../utils/cards-imgs/card-yellow-draw-two.png")

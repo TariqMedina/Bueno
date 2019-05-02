@@ -1,7 +1,7 @@
 {
-  "name": "mern",
+  "name": "bueno",
   "version": "1.0.0",
-  "description": "",
+  "description": "A digital version of UNO, the popular card game",
   "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
@@ -27,6 +27,7 @@
     "firebaseui": "^3.5.2",
     "if-env": "^1.0.4",
     "mongoose": "^5.3.16",
+    "react-bootstrap": "^1.0.0-beta.8",
     "react-firebase": "^2.2.8",
     "react-firebaseui": "^3.1.2",
     "socket.io": "^2.2.0",

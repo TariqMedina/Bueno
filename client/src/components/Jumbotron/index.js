@@ -3,6 +3,7 @@ import './style.css';
 import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import image from './bueno-logo.png';
+import { Link } from "react-router-dom";
 
 class Jumbotron extends Component {
   state = { isSignedIn: false };
@@ -39,9 +40,11 @@ class Jumbotron extends Component {
             </h2>
             <br />
             <br />
-            <a className="btn btn-primary btn-lg" href="/game" role="button">
+            <Link to={"/game"}>
+            <button className="btn btn-primary btn-lg" role="button">
               Join the Game!
-            </a>
+            </button>
+            </Link>
           </div>
         ) : (
           // <a className="btn btn-primary btn-lg" href="/login" role="button">Log in to play!</a>

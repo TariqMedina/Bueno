@@ -20,9 +20,57 @@ class Jumbotron extends Component {
   };
 
   componentDidMount() {
+    let firebasePlayerListCount;
+    firebase.database().ref('/players').on('value', (snapshot) => {
+      if(snapshot.val() === null){
+        firebasePlayerListCount = 0;
+      } else {
+        firebasePlayerListCount = Object.keys(snapshot.val()).length;
+      }
+      //console.log(firebasePlayerListCount);
+      this.setState({
+        firebasePlayers: firebasePlayerListCount
+      }, () => {
+        if(this.state.firebasePlayers === 4){
+          this.setState({
+            gameMessage: 'Sorry, we have 4 players. Please wait',
+            gameBtnClass: 'btn btn-info btn-lg join-btn',
+            disabled: true
+          })
+        }
+      })
+    })
+    //this.setState({})
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user });
     });
+  }
+
+  handleClick = () => {
+    if (this.state.firebasePlayers <= 4) {
+      console.log('hello less than 4');
+      this.setState({
+        activePlayers: [
+          ...this.state.activePlayers,
+          firebase.auth().currentUser.displayName
+        ]
+      });
+      //push current user to firebase
+      const playersRef = firebase.database().ref('players');
+      const player = {
+        user: firebase.auth().currentUser.email,
+        name: firebase.auth().currentUser.displayName
+      };
+      playersRef.push(player);
+    } else {
+      console.log('hello greater than 4');
+      this.setState({
+        gameMessage: 'Sorry, we have 4 players. Please wait',
+        gameBtnClass: 'btn btn-info btn-lg join-btn',
+        disabled: true
+      });
+      console.log('sorry we have enough players');
+    }
   }
 
   render() {

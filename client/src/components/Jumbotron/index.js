@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 class Jumbotron extends Component {
   state = { 
     isSignedIn: false,
+    firebasePlayers: "",
     gameMessage: 'Join the Game!',
     gameBtnClass: 'btn btn-primary btn-lg join-btn',
     disabled: false,

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./Nav.css";
 import { Link } from "react-router-dom";
 import firebase from "firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+
 
 import { auth, provider, startFirebaseUI } from "../Firebase/Firebaseconfig";
 

@@ -3,10 +3,12 @@ import Modal from 'react-bootstrap/Modal'
 import { Col, Row, Container } from "../components/Grid";
 import cards from "./cards.js"
 import "./style.css";
-import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:8000');
 
-const Player1 = {
+const io = require('socket.io-client');
+const socket = io();
+// const socket = io();
+
+const Player1 =  {
     name: "Player1",
     isActive: false,
 
@@ -51,12 +53,13 @@ function shuffle(a) {
 }
 
 var myname = "Player";
+var myimg = "img";
 
 class Game extends Component {
     state = {
         allPlayers: [Player1, Player2, Player3, Player4],
         playerOrder: [],
-        setPlayers: 0,
+        setPlayers: 0 ,
         // card,
         Player1: Player1,
         Player2: Player2,
@@ -65,7 +68,7 @@ class Game extends Component {
         showModal: false,
         drawn: false,
         backCard: backCard[0],
-        alert: "Start the game! Player 1's turn",
+        alert: "Waiting for players",
         currentPlayer: 0,
         turnOrder: true,
         drawPile: myDeck,
@@ -84,6 +87,7 @@ class Game extends Component {
     }
 
     componentDidMount() {
+        
         let player = this.state.Player1;
         // player.isActive = true;
         // this.setState({Player1:player});
@@ -93,6 +97,24 @@ class Game extends Component {
         this.addPlayer(playerName);       
         socket.on('playerAdded', (currentState)=>this.setNewPlayer(currentState))
 
+    }
+
+    componentDidMount() {
+        
+        let player = this.state.Player1;
+        // player.isActive = true;
+        // this.setState({Player1:player});
+        socket.on('stateChange', (myState) => { this.defineOrder(myState) });
+        var playerName = window.prompt("Please enter your username");
+        myname = playerName;
+        this.addPlayer(playerName);       
+        socket.on('playerAdded', (currentState)=>this.setNewPlayer(currentState))
+
+    }
+
+    componentWillUnmount() {
+        socket.off('stateChange');
+        socket.off('playerAdded');
     }
 
     defineOrder = (myState) => {
@@ -590,11 +612,11 @@ class Game extends Component {
                 </Row>
                 <Row>
                     <div className="col-md-3"></div>
-                    <div className="col-md-6 p1div">
+                    <div className="col-md-6 p1div" >
                         <Row>
                             {this.state.Player3.cards.map(card => (
                                 <div key={card.id} style={{ width: p3cards }}>
-                                    <img className="mx-auto p1cards" alt={card.id} src={this.state.backCard.img}></img>
+                                    <img className="mx-auto p3cards" alt={card.id} src={this.state.backCard.img}></img>
                                 </div>
                             ))}
                         </Row>

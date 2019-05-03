@@ -147,6 +147,19 @@ class Game extends Component {
       allPlayer[3] = statePlayer[2];
       current = allPlayer.findIndex(x => x.name === thisPlayer.name);
     }
+
+    componentDidMount() {
+        console.log("gameJs mount: " + this.props.location.state.userName);
+        let player = this.state.Player1;
+        // player.isActive = true;
+        // this.setState({Player1:player});
+        socket.on('stateChange', (myState) => { this.defineOrder(myState) });
+        //var playerName = window.prompt("Please enter your username");
+        myname =  this.props.location.state.userName;
+        this.addPlayer(this.props.location.state.userName);
+        //this.addPlayer(playerName);       
+        socket.on('playerAdded', (currentState)=>this.setNewPlayer(currentState))
+
     this.setState({
       allPlayers: allPlayer,
       Player1: allPlayer[0],

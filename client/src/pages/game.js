@@ -147,6 +147,7 @@ class Game extends Component {
       allPlayer[3] = statePlayer[2];
       current = allPlayer.findIndex(x => x.name === thisPlayer.name);
     }
+}
 
     componentDidMount() {
         console.log("gameJs mount: " + this.props.location.state.userName);
@@ -159,17 +160,6 @@ class Game extends Component {
         this.addPlayer(this.props.location.state.userName);
         //this.addPlayer(playerName);       
         socket.on('playerAdded', (currentState)=>this.setNewPlayer(currentState))
-
-    this.setState({
-      allPlayers: allPlayer,
-      Player1: allPlayer[0],
-      Player2: allPlayer[1],
-      Player3: allPlayer[2],
-      Player4: allPlayer[3],
-      currentPlayer: current,
-      playCard: myState.playCard,
-      alert: thisPlayer.name + "'s turn"
-    });
   };
 
   setNewPlayer = currentState => {

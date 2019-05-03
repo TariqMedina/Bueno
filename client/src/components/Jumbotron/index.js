@@ -83,7 +83,7 @@ class Jumbotron extends Component {
   render() {
     return (
       <div className="jumbotron text-center">
-        <img className="bueno-logo" src={image} />
+        <img className="bueno-logo" src={image} alt="bueno logo" />
         <p className="intro-text">
           Spice up your life with Bueno, a digital version of Uno, the popular
           card game!

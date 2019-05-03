@@ -1,64 +1,54 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const routes = require("./routes");
+// var app = require('express')();
+const express = require('express');
 const app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+const routes = require('./routes');
 const PORT = process.env.PORT || 3001;
-const io = require('socket.io')();
 
-// Define middleware here
-// server.listen(80)
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
 }
 // Add routes, both API and view
 app.use(routes);
-
-// Connect to the Mongo DB
-
-//if deployed, use deployed database. Otherwise use the local mongoheadlines db
-var MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost/mongoBueno";
-
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true }).then(function() {
-  console.log("connected to db");
-});
-
-
 // Start the API server
-app.listen(PORT, function () {
+server.listen(PORT, function() {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
 var currentState = {};
 var clientCount = 0;
-io.on('connection', (client) => {
-  client.on('connected', (playerName) => {
-    if(Object.entries(currentState).length === 0 && currentState.constructor === Object){
-      console.log('First Player')
+io.on('connection', client => {
+  console.log('Client connected');
+  client.on('connected', playerName => {
+    if (
+      Object.entries(currentState).length === 0 &&
+      currentState.constructor === Object
+    ) {
+      console.log('First Player');
       // client.broadcast.emit('stateChange', currentState);
-    }
-    else {
-      console.log('New Player')
-      console.log(currentState.setPlayers );
+    } else {
+      console.log('New Player');
+      console.log(currentState.setPlayers);
       currentState.playerName = playerName;
-      io.emit('playerAdded', (currentState));
+      io.emit('playerAdded', currentState);
     }
   });
-  client.on('setPlayer', (newState ) => {
+  client.on('setPlayer', newState => {
     currentState = newState;
   });
 
-  client.on('newState', (myState) => {
-    client.broadcast.emit('stateChange', myState)
+  client.on('newState', myState => {
+    client.broadcast.emit('stateChange', myState);
   });
-  client.on("disconnect", () => {
+  client.on('disconnect', () => {
     clientCount--;
-    console.log("user disconnected");
-  }) ;
+    client.emit('disconnected');
+    console.log('user disconnected');
+  });
 });
 
-const port = 8000;
-io.listen(port);
+// server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 console.log('Socket listening on port ', PORT);

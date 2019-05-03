@@ -9,6 +9,7 @@ class Jumbotron extends Component {
   state = { 
     isSignedIn: false,
     firebasePlayers: "",
+    activePlayers: [],
     gameMessage: 'Join the Game!',
     gameBtnClass: 'btn btn-primary btn-lg join-btn',
     disabled: false,
@@ -94,11 +95,16 @@ class Jumbotron extends Component {
             </h2>
             <br />
             <br />
-            <Link to={"/game"}>
-            <button className="btn btn-primary btn-lg" role="button">
-              Join the Game!
-            </button>
-            </Link>
+            <Link to={{ pathname: '/game', state: { userName: firebase.auth().currentUser.displayName} }}>
+            <button
+                className={this.state.gameBtnClass}
+                onClick={this.handleClick}
+                role="button"
+                disabled={this.state.disabled ? true : false}
+              >
+                {this.state.gameMessage}
+              </button>
+          </Link>
           </div>
         ) : (
           // <a className="btn btn-primary btn-lg" href="/login" role="button">Log in to play!</a>

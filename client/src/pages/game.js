@@ -84,19 +84,6 @@ class Game extends Component {
     });
   }
 
-  componentDidMount() {
-    let player = this.state.Player1;
-    // player.isActive = true;
-    // this.setState({Player1:player});
-    socket.on('stateChange', myState => {
-      this.defineOrder(myState);
-    });
-    //var playerName = window.prompt('Please enter your username');
-    myname = this.props.location.state.userName;
-    this.addPlayer(this.props.location.state.userName);
-    socket.on('playerAdded', currentState => this.setNewPlayer(currentState));
-  }
-
   componentWillUnmount() {
     socket.off('stateChange');
     socket.off('playerAdded');

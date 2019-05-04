@@ -1,0 +1,38 @@
+{
+  "name": "bueno",
+  "version": "1.0.0",
+  "description": "A digital version of UNO, the popular card game",
+  "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "seed": "node scripts/seedDB.js",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.11"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.3.1",
+    "express": "^4.16.3",
+    "firebase": "^5.10.0",
+    "firebaseui": "^3.5.2",
+    "if-env": "^1.0.4",
+    "mongoose": "^5.3.16",
+    "react-bootstrap": "^1.0.0-beta.8",
+    "react-bootstrap4-modal": "^1.7.0",
+    "react-firebase": "^2.2.8",
+    "react-firebaseui": "^3.1.2",
+    "react-modal": "^3.8.1",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
+  }
+}

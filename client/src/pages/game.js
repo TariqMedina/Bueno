@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import {Row, Container } from "../components/Grid";
+import { Row, Container } from "../components/Grid";
 import cards from "./cards.js"
 import "./style.css";
 
 
 const io = require('socket.io-client');
-// var socket = io('ws://localhost:3001', { transports: ['websocket'] });
-var socket = io('https://intense-forest-16529.herokuapp.com/', { transports: ['websocket'] });
+var socket = io('ws://localhost:3001', { transports: ['websocket'] });
+// var socket = io('https://intense-forest-16529.herokuapp.com/', { transports: ['websocket'] });
 
 const Player1 = {
     name: "Player1",
@@ -96,9 +96,9 @@ class Game extends Component {
         // this.setState({Player1:player});
         socket.on('stateChange', (myState) => { this.defineOrder(myState) });
         socket.on('playerAdded', (currentState) => this.setNewPlayer(currentState));
-        myname = window.prompt("Please enter your username");
-        // myname = this.props.location.state.userName;
-        if (myname !== null || myname !== "") {
+        // myname = window.prompt("Please enter your username");
+        myname = this.props.location.state.userName;
+        if (myname !== null && myname !== "") {
             this.addPlayer(myname);
         }
         // console.log(this.props.location.state.userName);
@@ -144,25 +144,23 @@ class Game extends Component {
             setPlayers--;
         }
         else if (setPlayers < 5) {
+            console.log(setPlayers)
             playerOrder.push(playerName)
             if (setPlayers === 1) {
-                allPlayer[0].name = playerOrder[0];
-
+                allPlayer[0].name = playerName
+    
             }
             else if (setPlayers === 2) {
-                allPlayer[1].name = playerOrder[1];
+                allPlayer[1].name = playerName
             }
             else if (setPlayers === 3) {
-                allPlayer[2].name = playerOrder[2];
+                allPlayer[2].name = playerName
             }
-            else if (setPlayers === 4) {
-                allPlayer[3].name = playerOrder[3];
+            else if(setPlayers=== 4){
+                allPlayer[3].name = playerName;
                 startgame();
             }
-            console.log(playerOrder);
-            console.log(allPlayer);
             this.defineOrderStart(allPlayer, setPlayers);
-            console.log(allPlayer);
             this.setState({
                 setPlayers: setPlayers,
                 allPlayers: allPlayer,
@@ -183,11 +181,11 @@ class Game extends Component {
 
     }
 
-    defineOrderStart = (allPlayer) => {
+    defineOrderStart = (allPlayer, setPlayers) =>{
         var myindex = allPlayer.findIndex(x => x.name === myname);
-        if (myindex !== 0) {
-            let existingPlayer = allPlayer.splice(0, myindex);
-            allPlayer.push(...existingPlayer);
+        if (myindex!==0){
+            let existingPlayer = allPlayer.splice(0,myindex);
+            allPlayer.push(... existingPlayer);
             console.log(allPlayer);
             // return allPlayer;
         }
@@ -216,14 +214,14 @@ class Game extends Component {
         let statePlayer = myState.allPlayers;
         let thisPlayer = myState.allPlayers[current];
         let allPlayer = [];
-        let turnOrder= myState.turnOrder;
+        let turnOrder = myState.turnOrder;
         var myIndex = statePlayer.findIndex(x => x.name === myname);
         if (myIndex === 0) {
             allPlayer[0] = statePlayer[0];
             allPlayer[1] = statePlayer[1];
             allPlayer[2] = statePlayer[2];
             allPlayer[3] = statePlayer[3];
-            current = allPlayer.findIndex(x => x.name === thisPlayer.name); 
+            current = allPlayer.findIndex(x => x.name === thisPlayer.name);
         }
         else if (myIndex === 1) {
             allPlayer[0] = statePlayer[1];
@@ -253,7 +251,7 @@ class Game extends Component {
             Player3: allPlayer[2],
             Player4: allPlayer[3],
             currentPlayer: current,
-            turnOrder:turnOrder,
+            turnOrder: turnOrder,
             playCard: myState.playCard,
             alert: thisPlayer.name + "'s turn"
         })
@@ -489,7 +487,7 @@ class Game extends Component {
         }
         else {
             current--;
-            if (current > (this.state.allPlayers.length - 1)) { 
+            if (current > (this.state.allPlayers.length - 1)) {
                 current = 0;
             }
             else if (current < 0) {

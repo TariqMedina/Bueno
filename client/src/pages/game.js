@@ -150,17 +150,17 @@ class Game extends Component {
         else if (setPlayers < 5) {
             playerOrder.push(playerName)
             if (setPlayers === 1) {
-                allPlayer[0].name = playerName;
+                allPlayer[0].name = playerOrder[0];
 
             }
             else if (setPlayers === 2) {
-                allPlayer[1].name = playerName;
+                allPlayer[1].name = playerOrder[1];
             }
             else if (setPlayers === 3) {
-                allPlayer[2].name = playerName;
+                allPlayer[2].name = playerOrder[2];
             }
             else if (setPlayers === 4) {
-                allPlayer[3].name = playerName;
+                allPlayer[3].name = playerOrder[3];
                 startgame();
             }
             console.log(playerOrder);

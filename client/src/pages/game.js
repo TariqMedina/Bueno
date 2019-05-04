@@ -174,14 +174,17 @@ class Game extends Component {
                 Player4: allPlayer[3],
                 playerOrder: playerOrder,
                 alert: "Waiting for players"
-            }, () => { socket.emit('setPlayer', this.state) })
+            }, () => { 
+                socket.emit('setPlayer', this.state);
+                if (setPlayers === 4) {
+                    this.startNew(); 
+                }
+            })
             console.log(setPlayers)
     
     
     
-            if (setPlayers === 4) {
-                this.startNew(); 
-            }
+
         }
 
     } 

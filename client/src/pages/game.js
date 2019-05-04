@@ -165,6 +165,7 @@ class Game extends Component {
             }
             console.log(playerOrder);
             this.defineOrderStart(allPlayer, setPlayers);
+            console.log(allPlayer);
             this.setState({
                 setPlayers: setPlayers,
                 allPlayers: allPlayer,

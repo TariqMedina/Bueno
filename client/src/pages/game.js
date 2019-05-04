@@ -5,8 +5,8 @@ import "./style.css";
 
 
 const io = require('socket.io-client');
-var socket = io('ws://localhost:3001', { transports: ['websocket'] });
-// var socket = io('https://intense-forest-16529.herokuapp.com/', { transports: ['websocket'] });
+// var socket = io('ws://localhost:3001', { transports: ['websocket'] });
+var socket = io('https://intense-forest-16529.herokuapp.com/', { transports: ['websocket'] });
 
 const Player1 = {
     name: "Player1",

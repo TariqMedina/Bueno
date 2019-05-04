@@ -96,8 +96,8 @@ class Game extends Component {
         // this.setState({Player1:player});
         socket.on('stateChange', (myState) => { this.defineOrder(myState) });
         socket.on('playerAdded', (currentState) => this.setNewPlayer(currentState));
-        myname = window.prompt("Please enter your username");
-        // myname = this.props.location.state.userName;
+        // myname = window.prompt("Please enter your username");
+        myname = this.props.location.state.userName;
         // console.log(this.props.location.state.activePlayers)
         // console.log(this.props.location.state.name)
         if (myname !== null && myname !== "" && myname !== "Player1" && myname !== "Player2" && myname !== "Player3" && myname !== "Player4") {

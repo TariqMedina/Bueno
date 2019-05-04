@@ -100,7 +100,7 @@ class Nav extends Component {
                     </span>
                   ) : (
                       <span className="navbar-text welcome">
-                        <i class="fab fa-canadian-maple-leaf" />
+                        <i className="fab fa-canadian-maple-leaf" />
                       </span>
                     )}
                 

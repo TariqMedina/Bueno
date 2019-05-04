@@ -16,13 +16,14 @@ if (process.env.NODE_ENV === 'production') {
 app.use(routes);
 // Start the API server
 server.listen(PORT, function() {
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!` );
 });
 var currentState = {};
 var clientCount = 0;
 io.on('connection', client => {
   console.log('Client connected');
-  client.on('connected', playerName => {
+  // client.emit('connect');
+  client.on('connected', playerName => { 
     if (
       Object.entries(currentState).length === 0 &&
       currentState.constructor === Object
@@ -46,7 +47,7 @@ io.on('connection', client => {
   client.on('disconnect', () => {
     clientCount--;
     client.emit('disconnected');
-    console.log('user disconnected');
+    console.log('user disconnected'); 
   });
 });
 

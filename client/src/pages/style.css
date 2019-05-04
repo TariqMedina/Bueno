@@ -13,13 +13,20 @@
   z-index: 5;
 }
 
+.p3div {
+  /* margin-top:10px; */
+  height: 20vh;
+  z-index: 5;
+}
+
 .mytable {
+  margin-top:80px;
   /* background-color: red; */
   /* z-index: -1; */
 }
 
 .mainMessage {
-  padding-top: 100px;
+  padding-top: 10px;
   color: white;
 }
 

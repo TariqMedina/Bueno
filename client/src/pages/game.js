@@ -8,7 +8,7 @@ import "./style.css";
 // var Modal = require('react-bootstrap-modal')
 const io = require('socket.io-client');
 // var socket = io('ws://localhost:3001', { transports: ['websocket'] });
-var socket = io('https://glacial-savannah-39108.herokuapp.com/ ', { transports: ['websocket'] });
+var socket = io('https://glacial-savannah-39108.herokuapp.com/', { transports: ['websocket'] });
 // const socket = io('http://localhost:3000');
 
 const Player1 = {

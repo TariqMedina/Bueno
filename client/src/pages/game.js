@@ -5,8 +5,8 @@ import "./style.css";
 
 
 const io = require('socket.io-client');
-// var socket = io('ws://localhost:3001', { transports: ['websocket'] });
-var socket = io('https://intense-forest-16529.herokuapp.com/', { transports: ['websocket'] });
+var socket = io('ws://localhost:3001', { transports: ['websocket'] });
+// var socket = io('https://intense-forest-16529.herokuapp.com/', { transports: ['websocket'] });
 
 const Player1 = {
     name: "Player1",
@@ -96,8 +96,8 @@ class Game extends Component {
         // this.setState({Player1:player});
         socket.on('stateChange', (myState) => { this.defineOrder(myState) });
         socket.on('playerAdded', (currentState) => this.setNewPlayer(currentState));
-        // myname = window.prompt("Please enter your username");
-        myname = this.props.location.state.userName;
+        myname = window.prompt("Please enter your username");
+        // myname = this.props.location.state.userName;
         // console.log(this.props.location.state.activePlayers)
         // console.log(this.props.location.state.name)
         if (myname !== null && myname !== "" && myname !== "Player1" && myname !== "Player2" && myname !== "Player3" && myname !== "Player4") {

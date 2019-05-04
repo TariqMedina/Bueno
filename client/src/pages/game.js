@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
-import { Col, Row, Container } from "../components/Grid";
-// import Modals from "../components/Modal"
+import {Row, Container } from "../components/Grid";
 import cards from "./cards.js"
 import "./style.css";
 
-// var Modal = require('react-bootstrap-modal')
+
 const io = require('socket.io-client');
 // var socket = io('ws://localhost:3001', { transports: ['websocket'] });
 var socket = io('https://intense-forest-16529.herokuapp.com/', { transports: ['websocket'] });
-// const socket = io('http://localhost:3000');
 
 const Player1 = {
     name: "Player1",
@@ -99,13 +95,13 @@ class Game extends Component {
         // player.isActive = true;
         // this.setState({Player1:player});
         socket.on('stateChange', (myState) => { this.defineOrder(myState) });
+        socket.on('playerAdded', (currentState) => this.setNewPlayer(currentState));
         myname = window.prompt("Please enter your username");
         // myname = this.props.location.state.userName;
-        this.addPlayer(myname);
-        socket.on('playerAdded', (currentState) => this.setNewPlayer(currentState));
+        if (myname !== null || myname !== "") {
+            this.addPlayer(myname);
+        }
         // console.log(this.props.location.state.userName);
-        this.handleShow = this.handleShow.bind(this);
-        this.handleClose = this.handleClose.bind(this);
     }
 
     componentWillUnmount() {
@@ -164,6 +160,7 @@ class Game extends Component {
                 startgame();
             }
             console.log(playerOrder);
+            console.log(allPlayer);
             this.defineOrderStart(allPlayer, setPlayers);
             console.log(allPlayer);
             this.setState({
@@ -175,23 +172,19 @@ class Game extends Component {
                 Player4: allPlayer[3],
                 playerOrder: playerOrder,
                 alert: "Waiting for players"
-            }, () => { 
+            }, () => {
                 socket.emit('setPlayer', this.state);
                 if (setPlayers === 4) {
-                    this.startNew(); 
+                    this.startNew();
                 }
             })
             console.log(setPlayers)
-    
-    
-    
-
         }
 
-    } 
+    }
 
-    defineOrderStart = (allPlayer, setPlayers) => {
-        var myindex = allPlayer.findIndex(x => x.name === myname); 
+    defineOrderStart = (allPlayer) => {
+        var myindex = allPlayer.findIndex(x => x.name === myname);
         if (myindex !== 0) {
             let existingPlayer = allPlayer.splice(0, myindex);
             allPlayer.push(...existingPlayer);
@@ -201,7 +194,7 @@ class Game extends Component {
     }
 
     startNew = () => {
-        var players = this.state.playerOrder; 
+        var players = this.state.playerOrder;
         var allPlayer = this.state.allPlayers;
         console.log("Starting the game")
         var myIndex = allPlayer.findIndex(x => x.name === players[0]);
@@ -223,13 +216,14 @@ class Game extends Component {
         let statePlayer = myState.allPlayers;
         let thisPlayer = myState.allPlayers[current];
         let allPlayer = [];
+        let turnOrder= myState.turnOrder;
         var myIndex = statePlayer.findIndex(x => x.name === myname);
         if (myIndex === 0) {
             allPlayer[0] = statePlayer[0];
             allPlayer[1] = statePlayer[1];
             allPlayer[2] = statePlayer[2];
             allPlayer[3] = statePlayer[3];
-            current = allPlayer.findIndex(x => x.name === thisPlayer.name);
+            current = allPlayer.findIndex(x => x.name === thisPlayer.name); 
         }
         else if (myIndex === 1) {
             allPlayer[0] = statePlayer[1];
@@ -259,6 +253,7 @@ class Game extends Component {
             Player3: allPlayer[2],
             Player4: allPlayer[3],
             currentPlayer: current,
+            turnOrder:turnOrder,
             playCard: myState.playCard,
             alert: thisPlayer.name + "'s turn"
         })
@@ -302,7 +297,7 @@ class Game extends Component {
                 return a !== card;
             })
             if (thisPlayer.cards.length === 0) {
-                let message = "Player " + (current + 1) + " wins!"
+                let message = thisPlayer.name + " wins!"
                 this.setState({
                     alert: message
                 })
@@ -490,11 +485,11 @@ class Game extends Component {
                 current = this.state.allPlayers.length - 1;
             }
             let newPlayer = this.state.allPlayers[current];
-            this.setPlayer(newPlayer, allPlayer, current, card);
+            this.setPlayer(newPlayer, allPlayer, current, card, turnOrder);
         }
         else {
             current--;
-            if (current > (this.state.allPlayers.length - 1)) {
+            if (current > (this.state.allPlayers.length - 1)) { 
                 current = 0;
             }
             else if (current < 0) {
@@ -516,63 +511,6 @@ class Game extends Component {
 
         return (
             <Container fluid="true">
-                <Button variant="primary" onClick={this.handleShow}>
-                    Launch demo modal
-        </Button>
-
-                <Modal show={this.state.show} onHide={this.handleClose} style={{zIndex: 5000}}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.handleClose}>
-                            Close
-            </Button>
-                        <Button variant="primary" onClick={this.handleClose}>
-                            Save Changes
-            </Button>
-                    </Modal.Footer>
-                </Modal>
-                {/* <div className="backdrop" style={{ backdropStyle }}>
-                    <div className="modal" style={{ modalStyle }}>
-                        {this.props.children}
-
-                    </div>
-                </div> */}
-                {/* <Modal
-                    show={this.state.open}
-                    onHide={closeModal}
-                    aria-labelledby="ModalHeader"
-                >
-                    <div className="modal-body">
-                        <Row>
-                            <Col size="md-3">
-                                <div className="rounded" style={{ height: 100, backgroundColor: "red" }} onClick={() => this.handleWild("red")}>
-
-                                </div>
-                            </Col>
-                            <Col size="md-3">
-                                <div className="rounded" style={{ height: 100, backgroundColor: "blue" }} onClick={() => this.handleWild("blue")}>
-
-                                </div>
-                            </Col>
-                            <Col size="md-3">
-                                <div className="rounded" style={{ height: 100, backgroundColor: "orange" }} onClick={() => this.handleWild("yellow")}>
-
-                                </div>
-                            </Col>
-                            <Col size="md-3">
-                                <div className="rounded" style={{ height: 100, backgroundColor: "green" }} onClick={() => this.handleWild("green")}>
-
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                </Modal> */}
-                {/* <Row>
-                    <span>{myname ? myname : "Not chosen"}</span>
-                </Row> */}
                 <Row>
                     <div className="col-md-3 mx-auto text-center" style={{ backgroundColor: this.state.Player1.isActive ? "green" : "" }}>
                         <button className="btn btn-primary">{this.state.Player1.name}</button>
@@ -608,6 +546,14 @@ class Game extends Component {
                         <Row>
                             <h2 className="mainMessage mx-auto">{this.state.alert}</h2>
                         </Row>
+                        <div className="row" style={{ display: this.state.showModal ? "" : "none" }}>
+                            <div className="btn-group mx-auto mt-1">
+                                <button className="btn" style={{ backgroundColor: "red", color: "white" }} onClick={() => this.handleWild("red")}>Red</button>
+                                <button className="btn" style={{ backgroundColor: "blue", color: "white" }} onClick={() => this.handleWild("blue")}>Blue</button>
+                                <button className="btn" style={{ backgroundColor: "orange", color: "white" }} onClick={() => this.handleWild("orange")}>Orange</button>
+                                <button className="btn" style={{ backgroundColor: "green", color: "white" }} onClick={() => this.handleWild("green")}>Green</button>
+                            </div>
+                        </div>
                         <Row>
                             <button className="btn btn-success mx-auto" style={this.state.drawn ? {} : { display: "none" }} onClick={() => this.handlePass(this.state.playCard)}>Pass</button>
                         </Row>

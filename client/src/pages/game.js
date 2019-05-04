@@ -164,9 +164,6 @@ class Game extends Component {
                 startgame();
             }
             console.log(playerOrder);
-            this.setState({
-                playerOrder: playerOrder
-            })
             this.defineOrderStart(allPlayer, setPlayers);
             this.setState({
                 setPlayers: setPlayers,
@@ -175,6 +172,7 @@ class Game extends Component {
                 Player2: allPlayer[1],
                 Player3: allPlayer[2],
                 Player4: allPlayer[3],
+                playerOrder: playerOrder,
                 alert: "Waiting for players"
             }, () => { socket.emit('setPlayer', this.state) })
             console.log(setPlayers)

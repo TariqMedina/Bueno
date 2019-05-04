@@ -100,7 +100,7 @@ class Game extends Component {
         myname = this.props.location.state.userName;
         // console.log(this.props.location.state.activePlayers)
         // console.log(this.props.location.state.name)
-        if (myname !== null && myname !== "" && myname!=="Player1" && myname!=="Player2" && myname!=="Player3" && myname!=="Player4") {
+        if (myname !== null && myname !== "" && myname !== "Player1" && myname !== "Player2" && myname !== "Player3" && myname !== "Player4") {
             this.addPlayer(myname);
         }
         // console.log(this.props.location.state.userName);
@@ -135,59 +135,61 @@ class Game extends Component {
 
     setNewPlayer = (currentState) => {
         console.log(currentState.allPlayers)
-        var playerName = currentState.playerName;
-        var setPlayers = currentState.setPlayers + 1;
-        console.log(setPlayers);
-        var allPlayer = currentState.allPlayers;
-        var playerOrder = currentState.playerOrder;
-        if (playerOrder.find(player => player === playerName)) {
-            var thisIndex = allPlayer.findIndex(player => player.name === playerName);
-            allPlayer[thisIndex].name = playerName;
-            setPlayers--;
-        }
-        else if (setPlayers < 5) {
-            console.log(setPlayers)
-            playerOrder.push(playerName)
-            if (setPlayers === 1) {
-                allPlayer[0].name = playerName
-    
-            }
-            else if (setPlayers === 2) {
-                allPlayer[1].name = playerName
-            }
-            else if (setPlayers === 3) {
-                allPlayer[2].name = playerName
-            }
-            else if(setPlayers=== 4){
-                allPlayer[3].name = playerName;
-                startgame();
-            }
-            this.defineOrderStart(allPlayer, setPlayers);
-            this.setState({
-                setPlayers: setPlayers,
-                allPlayers: allPlayer,
-                Player1: allPlayer[0],
-                Player2: allPlayer[1],
-                Player3: allPlayer[2],
-                Player4: allPlayer[3],
-                playerOrder: playerOrder,
-                alert: "Waiting for players"
-            }, () => {
-                socket.emit('setPlayer', this.state);
-                if (setPlayers === 4) {
-                    this.startNew();
-                }
-            })
-            console.log(setPlayers)
-        }
 
+        var playerName = currentState.playerName;
+        if (playerName !== null && playerName !== "" && playerName !== "Player1" && playerName !== "Player2" && playerName !== "Player3" && playerName !== "Player4") {
+            var setPlayers = currentState.setPlayers + 1;
+            console.log(setPlayers);
+            var allPlayer = currentState.allPlayers;
+            var playerOrder = currentState.playerOrder;
+            if (playerOrder.find(player => player === playerName)) {
+                var thisIndex = allPlayer.findIndex(player => player.name === playerName);
+                allPlayer[thisIndex].name = playerName;
+                setPlayers--;
+            }
+            else if (setPlayers < 5) {
+                console.log(setPlayers)
+                playerOrder.push(playerName)
+                if (setPlayers === 1) {
+                    allPlayer[0].name = playerName
+
+                }
+                else if (setPlayers === 2) {
+                    allPlayer[1].name = playerName
+                }
+                else if (setPlayers === 3) {
+                    allPlayer[2].name = playerName
+                }
+                else if (setPlayers === 4) {
+                    allPlayer[3].name = playerName;
+                    startgame();
+                }
+                this.defineOrderStart(allPlayer, setPlayers);
+                this.setState({
+                    setPlayers: setPlayers,
+                    allPlayers: allPlayer,
+                    Player1: allPlayer[0],
+                    Player2: allPlayer[1],
+                    Player3: allPlayer[2],
+                    Player4: allPlayer[3],
+                    playerOrder: playerOrder,
+                    alert: "Waiting for players"
+                }, () => {
+                    socket.emit('setPlayer', this.state);
+                    if (setPlayers === 4) {
+                        this.startNew();
+                    }
+                })
+                console.log(setPlayers)
+            }
+        }
     }
 
-    defineOrderStart = (allPlayer, setPlayers) =>{
+    defineOrderStart = (allPlayer, setPlayers) => {
         var myindex = allPlayer.findIndex(x => x.name === myname);
-        if (myindex!==0){
-            let existingPlayer = allPlayer.splice(0,myindex);
-            allPlayer.push(... existingPlayer);
+        if (myindex !== 0) {
+            let existingPlayer = allPlayer.splice(0, myindex);
+            allPlayer.push(...existingPlayer);
             console.log(allPlayer);
             // return allPlayer;
         }

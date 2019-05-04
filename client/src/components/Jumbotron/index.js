@@ -41,15 +41,21 @@ class Jumbotron extends Component {
       }
       //console.log(firebasePlayerListCount);
       this.setState({
-        firebasePlayers: firebasePlayerListCount,
-        activePlayers: [...firebasePlayers]
+        firebasePlayers: firebasePlayerListCount
       }, () => {
+        if(this.state.firebasePlayers > 0){
+          this.setState({
+            activePlayers: [...firebasePlayers]
+          })
+        }
         if(this.state.firebasePlayers === 4){
           this.setState({
             gameMessage: 'Sorry, we have 4 players. Please wait',
             gameBtnClass: 'btn btn-info btn-lg join-btn',
             disabled: true
           })
+        } else {
+
         }
       })
     })
@@ -64,7 +70,9 @@ class Jumbotron extends Component {
 
     snapshot.forEach(function(childSnapshot) {
         var item = childSnapshot.val();
+        console.log("snapshotArray function: " + JSON.stringify(item));
         item.key = childSnapshot.key;
+        item.profilePic = firebase.auth().currentUser.photoURL;
 
         returnArr.push(item);
     });
@@ -92,7 +100,7 @@ class Jumbotron extends Component {
       })
 
       this.setState({
-        gameMessage: "Waiting for other players...",
+        gameMessage: "Waiting for other players... ",
         disabled: true
       });
       
@@ -146,7 +154,7 @@ class Jumbotron extends Component {
                 role="button"
                 disabled={this.state.disabled ? true : false}
               >
-                {this.state.gameMessage}
+                {this.state.gameMessage}. {this.state.firebasePlayers}/4
               </button>
         {/*</Link>*/}
           </div>

@@ -1,3 +1,7 @@
+h2 {
+  z-index:-2;
+}
+
 .p4div {
   height: 40vh;
   width: 100%;
@@ -10,13 +14,13 @@
 
 .p1div {
   height: 20vh;
-  z-index: 5;
+  z-index: -1;
 }
 
 .p3div {
   /* margin-top:10px; */
   height: 20vh;
-  z-index: 5;
+  z-index: -1;
 }
 
 .mytable {

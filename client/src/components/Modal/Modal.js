@@ -22,7 +22,7 @@ const Modal = ({ handleClose, show, children }) => {
                 position: 'fixed',
                 bottom: '500px',
                 right: 0,
-                zIndex: 3,
+                zIndex: 5,
                 width: 'auto',
                 backgroundColor: 'white',
                 color: 'black',
@@ -38,7 +38,7 @@ const Modal = ({ handleClose, show, children }) => {
   );
 };
 
-class Dashboard extends Component {
+class Modals extends Component {
   state = { show: false, isSignedIn: false };
 
   showModal = () => {
@@ -82,6 +82,6 @@ class Dashboard extends Component {
 
 const container = document.createElement('div');
 document.body.appendChild(container);
-ReactDOM.render(<Dashboard />, container);
+ReactDOM.render(<Modals />, container);
 
-export default Dashboard;
+export default Modals;

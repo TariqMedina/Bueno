@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-// import Modal from 'react-bootstrap4-modal';
-
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 import { Col, Row, Container } from "../components/Grid";
+// import Modals from "../components/Modal"
 import cards from "./cards.js"
 import "./style.css";
 
@@ -80,13 +81,16 @@ class Game extends Component {
         Player2cards: [],
         Player3cards: [],
         Player4cards: [],
-        playCard: ""
+        playCard: "",
+        show: false,
     };
 
-    showModal() {
-        this.setState({
-            showModal: true
-        })
+    handleClose() {
+        this.setState({ show: false });
+    }
+
+    handleShow() {
+        this.setState({ show: true });
     }
 
     componentDidMount() {
@@ -98,21 +102,10 @@ class Game extends Component {
         var playerName = window.prompt("Please enter your username");
         myname = playerName;
         this.addPlayer(playerName);
-        socket.on('playerAdded', (currentState) => this.setNewPlayer(currentState))
-        // socket.on('connect', () => { this.addPlayer("James") });
-    }
-
-    componentDidMount() {
-
-        let player = this.state.Player1;
-        // player.isActive = true;
-        // this.setState({Player1:player});
-        socket.on('stateChange', (myState) => { this.defineOrder(myState) });
-        var playerName = window.prompt("Please enter your username");
-        myname = playerName;
-        this.addPlayer(playerName);
-        socket.on('playerAdded', (currentState) => this.setNewPlayer(currentState))
-
+        socket.on('playerAdded', (currentState) => this.setNewPlayer(currentState));
+        // console.log(this.props.location.state.userName);
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     componentWillUnmount() {
@@ -149,20 +142,27 @@ class Game extends Component {
         console.log(setPlayers);
         var allPlayer = currentState.allPlayers;
         var playerOrder = currentState.playerOrder;
-        playerOrder.push(playerName)
-        if (setPlayers === 1) {
-            allPlayer[0].name = playerName
+        if (playerOrder.find(player => player === playerName)) {
+            var thisIndex = allPlayer.findIndex(player => player.name === playerName);
+            allPlayer[thisIndex].name = playerName;
+            setPlayers--;
+        }
+        else if (setPlayers < 5) {
+            playerOrder.push(playerName)
+            if (setPlayers === 1) {
+                allPlayer[0].name = playerName;
 
-        }
-        else if (setPlayers === 2) {
-            allPlayer[1].name = playerName
-        }
-        else if (setPlayers === 3) {
-            allPlayer[2].name = playerName
-        }
-        else if (setPlayers === 4) {
-            allPlayer[3].name = playerName;
-            startgame();
+            }
+            else if (setPlayers === 2) {
+                allPlayer[1].name = playerName;
+            }
+            else if (setPlayers === 3) {
+                allPlayer[2].name = playerName;
+            }
+            else if (setPlayers === 4) {
+                allPlayer[3].name = playerName;
+                startgame();
+            }
         }
         console.log(playerOrder);
         this.setState({
@@ -177,11 +177,11 @@ class Game extends Component {
             Player3: allPlayer[2],
             Player4: allPlayer[3],
             alert: "Waiting for players"
-        })
+        }, () => { socket.emit('setPlayer', this.state) })
         console.log(setPlayers)
 
 
-        socket.emit('setPlayer', this.state)
+
         if (setPlayers === 4) {
             this.startNew();
         }
@@ -507,8 +507,29 @@ class Game extends Component {
         var p4cards = 100 / this.state.Player4.cards.length + "%";
         var p2cards = 100 / this.state.Player2.cards.length + "%";
         var p3cards = 100 / this.state.Player3.cards.length + "%";
+
+
+
         return (
             <Container fluid="true">
+                <Button variant="primary" onClick={this.handleShow}>
+                    Launch demo modal
+        </Button>
+
+                <Modal show={this.state.show} onHide={this.handleClose} style={{zIndex: 5000}}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Close
+            </Button>
+                        <Button variant="primary" onClick={this.handleClose}>
+                            Save Changes
+            </Button>
+                    </Modal.Footer>
+                </Modal>
                 {/* <div className="backdrop" style={{ backdropStyle }}>
                     <div className="modal" style={{ modalStyle }}>
                         {this.props.children}

@@ -66,7 +66,8 @@ class Jumbotron extends Component {
       const playersRef = firebase.database().ref('players');
       const player = {
         user: firebase.auth().currentUser.email,
-        name: firebase.auth().currentUser.displayName
+        name: firebase.auth().currentUser.displayName,
+        // displayImg: firebase.auth().currentUser.photoURL
       };
       playersRef.push(player);
     } else {
@@ -95,7 +96,7 @@ class Jumbotron extends Component {
             </h2>
             <br />
             <br />
-            <Link to={{ pathname: '/game', state: { userName: firebase.auth().currentUser.displayName} }}>
+            <Link to={{ pathname: '/game', state: { userName: firebase.auth().currentUser.displayName, displayImg: firebase.auth().currentUser.photoURL} }}>
             <button
                 className={this.state.gameBtnClass}
                 onClick={this.handleClick}

@@ -65,7 +65,7 @@ export default class Form extends Component {
   render() {
     return (
       <div
-        style={{ position: 'fixed', bottom: 0, right: 0, zIndex: 5000 }}
+        style={{ position: 'fixed', bottom: 0, right: 0, zIndex: 2 }}
         className="form"
       >
         <div className="form__message">
